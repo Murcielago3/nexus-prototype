@@ -3,7 +3,14 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Compass, Crosshair, Gauge, Radio, Route, ShieldAlert } from 'lucide-react'
 import { Globe } from '@/components/Globe'
-import { CountUp, DecryptedText, MaskText, ScrollReveal, ShinyText, SplitText } from '@/components/bits/Text'
+import {
+  CountUp,
+  DecryptedText,
+  MaskLine,
+  MaskText,
+  ScrollReveal,
+  ShinyText,
+} from '@/components/bits/Text'
 import { Aurora, Magnet, Parallax, SpotlightCard, TiltCard } from '@/components/bits/Surfaces'
 import { EVENTS, HOST_CITY, ZONES } from '@/data/city'
 import { SCENARIO_MARKS } from '@/data/mock'
@@ -71,31 +78,25 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.15 }}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.28, 1] }}
           >
             <Eyebrow>Intelligent event orchestration</Eyebrow>
           </motion.div>
 
-          <h1 className="mt-8 space-y-1">
-            <SplitText
-              text="SEE THE CITY"
-              delay={0.28}
-              className="display block text-[clamp(2.6rem,6.6vw,5.4rem)] text-ink"
-            />
-            <SplitText
-              text="BEFORE IT"
-              delay={0.42}
-              className="display block text-[clamp(2.6rem,6.6vw,5.4rem)] text-ink"
-            />
-            <span className="display block text-[clamp(2.6rem,6.6vw,5.4rem)]">
+          {/* lines rise in sequence from behind a clipping edge, one block
+              each, which carries more weight than characters arriving apart */}
+          <h1 className="display mt-8 text-[clamp(2.6rem,6.6vw,5.4rem)] text-ink">
+            <MaskLine delay={0.2}>SEE THE CITY</MaskLine>
+            <MaskLine delay={0.32}>BEFORE IT</MaskLine>
+            <MaskLine delay={0.44}>
               <ShinyText>BREAKS.</ShinyText>
-            </span>
+            </MaskLine>
           </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.95 }}
+            transition={{ duration: 1.1, delay: 1.0, ease: [0.22, 1, 0.28, 1] }}
             className="mt-9 max-w-lg text-pretty font-luxe text-[1.62rem] italic leading-snug text-ink/72"
           >
             From reactive firefighting to proactive orchestration.
@@ -104,7 +105,7 @@ function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.08 }}
+            transition={{ duration: 1.1, delay: 1.14, ease: [0.22, 1, 0.28, 1] }}
             className="mt-6 max-w-md text-pretty text-[1.16rem] leading-relaxed text-ink/50"
           >
             A million visitors arrive in seventy two hours. Hotels, transit and venues each
@@ -115,7 +116,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.22 }}
+            transition={{ duration: 1.1, delay: 1.3, ease: [0.22, 1, 0.28, 1] }}
             className="mt-11 flex flex-wrap items-center gap-3"
           >
             <Magnet>
@@ -127,7 +128,7 @@ function Hero() {
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Magnet>
-            <Magnet strength={0.2}>
+            <Magnet>
               <Link
                 to="/guide"
                 className="group inline-flex items-center gap-3 border border-line-strong px-7 py-3.5 text-ink/75 transition-colors hover:border-ember-500 hover:text-ink"
@@ -141,7 +142,7 @@ function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.5 }}
+            transition={{ duration: 1.1, delay: 1.52, ease: [0.22, 1, 0.28, 1] }}
             className="mt-12 flex items-center gap-3 border-t border-line pt-5"
           >
             <span className="tele text-ink/35">LIVE OPERATION</span>

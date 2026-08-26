@@ -219,6 +219,10 @@ export function TiltCard({
   )
 }
 
+function clampOffset(v: number, max: number): number {
+  return Math.max(-max, Math.min(v, max))
+}
+
 /* ============================================================
    Magnet
    Pulls an element toward the cursor within a radius. Used on the
@@ -228,17 +232,21 @@ export function TiltCard({
 export function Magnet({
   children,
   className,
-  strength = 0.35,
-  radius = 110,
+  strength = 0.12,
+  radius = 70,
+  maxOffset = 9,
 }: {
   children: ReactNode
   className?: string
   strength?: number
   radius?: number
+  /** Hard cap in pixels, so the pull is felt rather than watched. */
+  maxOffset?: number
 }) {
   const ref = useRef<HTMLDivElement>(null)
-  const x = useSpring(useMotionValue(0), { stiffness: 260, damping: 20 })
-  const y = useSpring(useMotionValue(0), { stiffness: 260, damping: 20 })
+  // a soft spring, not a snappy one, or the button chases the cursor
+  const x = useSpring(useMotionValue(0), { stiffness: 130, damping: 24, mass: 0.6 })
+  const y = useSpring(useMotionValue(0), { stiffness: 130, damping: 24, mass: 0.6 })
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -249,8 +257,8 @@ export function Magnet({
       const dx = e.clientX - cx
       const dy = e.clientY - cy
       if (Math.hypot(dx, dy) < radius + rect.width / 2) {
-        x.set(dx * strength)
-        y.set(dy * strength)
+        x.set(clampOffset(dx * strength, maxOffset))
+        y.set(clampOffset(dy * strength, maxOffset))
       } else {
         x.set(0)
         y.set(0)
@@ -258,7 +266,7 @@ export function Magnet({
     }
     window.addEventListener('mousemove', onMove)
     return () => window.removeEventListener('mousemove', onMove)
-  }, [strength, radius, x, y])
+  }, [strength, radius, maxOffset, x, y])
 
   return (
     <motion.div ref={ref} className={cn('inline-block', className)} style={{ x, y }}>

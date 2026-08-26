@@ -111,6 +111,39 @@ export function MaskText({
 }
 
 /* ============================================================
+   MaskLine
+   The same clipping edge as MaskText, but the whole line rises as
+   one block. Used where the line contains markup of its own, and
+   for the hero, where lines arriving in sequence reads heavier than
+   words arriving in sequence.
+   ============================================================ */
+
+export function MaskLine({
+  children,
+  className,
+  delay = 0,
+  duration = 1.15,
+}: {
+  children: React.ReactNode
+  className?: string
+  delay?: number
+  duration?: number
+}) {
+  return (
+    <span className={cn('block -mb-[0.1em] overflow-hidden pb-[0.1em]', className)}>
+      <motion.span
+        className="block will-change-transform"
+        initial={{ y: '112%' }}
+        animate={{ y: '0%' }}
+        transition={{ duration, delay, ease: [0.22, 1, 0.28, 1] }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  )
+}
+
+/* ============================================================
    DecryptedText
    Scrambles through glyphs before settling. Gives the console a
    decoding feel without being noisy.
