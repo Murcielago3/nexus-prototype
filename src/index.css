@@ -36,20 +36,40 @@
   --color-critical: #a61304;
 
   --font-display: "Milker", "Anton", "Arial Black", system-ui, sans-serif;
-  --font-luxe: "Cormorant Garamond", "Didot", "Times New Roman", serif;
+  --font-luxe: "Role Model", "Bodoni Moda", "Didot", "Times New Roman", serif;
   --font-tele: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
 }
 
 /* ────────────────────────────────────────────────────────────────
    Fonts
 
-   MILKER is a commercial face and is not redistributable, so it is not
-   vendored here. Drop Milker.woff2 into /public/fonts/ and it is picked
+   Neither MILKER nor ROLE MODEL is vendored here. Milker is commercial,
+   Role Model is free for personal use only, so shipping either would be a
+   licence problem. Drop the files into /public/fonts/ and they are picked
    up automatically. See public/fonts/README.md.
 
-   Until then the stack falls through to Anton, a heavy condensed
-   grotesque chosen so the layout reads correctly either way.
+   Until then the stacks fall through to Anton, a heavy condensed grotesque,
+   and Bodoni Moda, a high contrast modern serif in the same register as
+   Role Model. Both are chosen so the layout reads correctly either way.
    ──────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Role Model";
+  src: url("/fonts/RoleModel.woff2") format("woff2"),
+       url("/fonts/RoleModel.woff") format("woff"),
+       url("/fonts/RoleModel.otf") format("opentype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Role Model";
+  src: url("/fonts/RoleModel-Oblique.woff2") format("woff2"),
+       url("/fonts/RoleModel-Oblique.otf") format("opentype");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
 
 @font-face {
   font-family: "Milker";

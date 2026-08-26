@@ -48,7 +48,7 @@ function SectionHead({ title, lede }: { title: string; lede?: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.9, delay: 0.28, ease: [0.22, 1, 0.28, 1] }}
-          className="mt-7 max-w-2xl text-pretty font-luxe text-[1.5rem] leading-relaxed text-ink/62"
+          className="mt-7 max-w-2xl text-pretty font-luxe text-[1.22rem] leading-relaxed text-ink/62"
         >
           {lede}
         </motion.p>
@@ -97,7 +97,7 @@ function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 1.0, ease: [0.22, 1, 0.28, 1] }}
-            className="mt-9 max-w-lg text-pretty font-luxe text-[1.62rem] italic leading-snug text-ink/72"
+            className="mt-9 max-w-lg text-pretty font-luxe text-[1.08rem] italic leading-snug text-ink/72"
           >
             From reactive firefighting to proactive orchestration.
           </motion.p>
@@ -106,7 +106,7 @@ function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 1.14, ease: [0.22, 1, 0.28, 1] }}
-            className="mt-6 max-w-md text-pretty text-[1.16rem] leading-relaxed text-ink/50"
+            className="mt-6 max-w-md text-pretty text-[1rem] leading-relaxed text-ink/50"
           >
             A million visitors arrive in seventy two hours. Hotels, transit and venues each
             see one tenth of the picture. NEXUS holds all of it at once, and calls the
@@ -201,7 +201,7 @@ function Manifesto() {
       </Parallax>
 
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <ScrollReveal className="mt-10 text-balance font-luxe text-[clamp(1.7rem,3.8vw,2.95rem)] leading-[1.36] text-ink">
+        <ScrollReveal className="mt-10 text-balance font-luxe text-[clamp(1.4rem,3.1vw,2.4rem)] leading-[1.36] text-ink">
           Everyone else builds a dashboard that tells you what already happened. A rear view
           mirror. NEXUS is a steering wheel. It watches pressure build across every hotel,
           every platform, every gate, and it names the failure that is still forty seven
@@ -273,9 +273,9 @@ function Organs() {
                 </div>
 
                 <h3 className="display text-[1.7rem] text-ink">{o.name}</h3>
-                <p className="mt-2 font-luxe text-[1.2rem] italic text-ember-500">{o.sub}</p>
+                <p className="mt-2 font-luxe text-[0.98rem] italic text-ember-500">{o.sub}</p>
 
-                <p className="mt-6 text-[1.15rem] leading-relaxed text-ink/58">{o.body}</p>
+                <p className="mt-6 text-[0.99rem] leading-relaxed text-ink/58">{o.body}</p>
 
                 <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-6">
                   {o.detail.map((d) => (
@@ -313,7 +313,7 @@ function Chain() {
               title="SHOW THE REASONING, NOT THE VERDICT."
               lede="A red zone tells an operator nothing they can act on. Every NEXUS alert carries the full chain that produced it, so the person on shift can agree with it, override it, or argue with it."
             />
-            <p className="max-w-xl font-luxe text-[1.32rem] italic leading-relaxed text-ink/45">
+            <p className="max-w-xl font-luxe text-[1.08rem] italic leading-relaxed text-ink/45">
               This is the difference between a model you trust at 2am and one you mute.
             </p>
           </div>
@@ -348,7 +348,7 @@ function Chain() {
                       <div className="tele mb-1.5 text-ink/38">{c.k}</div>
                       <div
                         className={cn(
-                          'font-luxe text-[1.28rem] leading-snug',
+                          'font-luxe text-[1.05rem] leading-snug',
                           i === CHAIN.length - 1 ? 'text-ember-700' : 'text-ink/75',
                         )}
                       >
@@ -419,7 +419,7 @@ function Interfaces() {
                 >
                   <div className="tele mb-8 text-ember-500">{f.tag}</div>
                   <h3 className="display text-[clamp(1.9rem,3.6vw,2.9rem)] text-ink">{f.title}</h3>
-                  <p className="mt-6 max-w-lg text-[1.16rem] leading-relaxed text-ink/58">{f.body}</p>
+                  <p className="mt-6 max-w-lg text-[1rem] leading-relaxed text-ink/58">{f.body}</p>
 
                   <div className="mt-9 flex flex-wrap gap-2">
                     {f.points.map((p) => (
@@ -485,7 +485,7 @@ function Timeline() {
                 <h4 className={cn('display text-[1.02rem]', i === 4 ? 'text-ember-700' : 'text-ink')}>
                   {m.label}
                 </h4>
-                <p className="mt-3 text-[1.08rem] leading-relaxed text-ink/48">{m.note}</p>
+                <p className="mt-3 text-[0.92rem] leading-relaxed text-ink/48">{m.note}</p>
               </motion.div>
             ))}
           </div>
@@ -502,7 +502,7 @@ function Timeline() {
               <div className="display text-[2.5rem] text-ember-500">
                 <CountUp to={s.v} suffix={s.suffix} />
               </div>
-              <div className="mt-2 font-luxe text-[1.18rem] italic text-ink/45">{s.sub}</div>
+              <div className="mt-2 font-luxe text-[0.96rem] italic text-ink/45">{s.sub}</div>
             </div>
           ))}
         </div>
@@ -524,7 +524,7 @@ function Closer() {
             className="display block text-[clamp(2rem,5.4vw,4.2rem)] text-ink"
           />
         </h2>
-        <p className="mx-auto mt-8 max-w-xl font-luxe text-[1.5rem] italic leading-relaxed text-ink/58">
+        <p className="mx-auto mt-8 max-w-xl font-luxe text-[1.22rem] italic leading-relaxed text-ink/58">
           NEXUS is simply the first thing in the room that listens to all of it at once.
         </p>
         <div className="mt-12 flex justify-center">

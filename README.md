@@ -67,18 +67,20 @@ calm state and the bright oranges are alarm.
 | Role | Family |
 |---|---|
 | Display | Milker, falling back to Anton |
-| Luxury serif | Cormorant Garamond |
+| Luxury serif | Role Model, falling back to Bodoni Moda |
 | Telemetry and numerals | JetBrains Mono |
 
-Cormorant has a small x-height and reads roughly a quarter smaller than a sans
-at the same declared size, so every serif size here is set larger than it looks
-on paper. Do not "normalise" those numbers downward.
+Role Model and Bodoni Moda both carry a healthy x-height, so the serif sizes
+here are ordinary numbers. They were much larger while the serif was Cormorant,
+which sets very small for its declared size. If the serif is ever swapped again,
+re-check the scale rather than assuming it carries over.
 
 The landing page runs on the serif. Both dashboards default to the mono, which
 is the right voice for a console and keeps dense small text legible.
 
-Milker is commercial and is not vendored here. Drop the licensed file into
-`public/fonts/` and it is picked up with no code change. See
+Neither Milker nor Role Model is vendored here: Milker is commercial and Role
+Model is free for personal use only. Drop the licensed files into
+`public/fonts/` and they are picked up with no code change. See
 `public/fonts/README.md`.
 
 ## Motion

@@ -289,7 +289,7 @@ export default function SmartGuide() {
               </div>
 
               <h1 className="display mb-3 text-[1.5rem] text-ink">WHERE SHOULD YOU GO RIGHT NOW?</h1>
-              <p className="mb-7 font-luxe text-[1.2rem] italic leading-snug text-ink/50">
+              <p className="mb-7 font-luxe text-[0.98rem] italic leading-snug text-ink/50">
                 Ranked by what the city can actually absorb tonight.
               </p>
 
@@ -381,7 +381,7 @@ export default function SmartGuide() {
             className="display text-balance text-[clamp(2rem,4.6vw,3.6rem)] text-ink"
           />
 
-          <p className="mt-8 max-w-xl text-pretty font-luxe text-[1.5rem] leading-relaxed text-ink/62">
+          <p className="mt-8 max-w-xl text-pretty font-luxe text-[1.22rem] leading-relaxed text-ink/62">
             Crowd control fails the moment people feel pushed. So the Smart Guide never hides
             its reasoning.
           </p>
@@ -407,7 +407,7 @@ export default function SmartGuide() {
             ))}
           </div>
 
-          <p className="mt-7 font-luxe text-[1.2rem] italic leading-relaxed text-ink/42">
+          <p className="mt-7 font-luxe text-[0.98rem] italic leading-relaxed text-ink/42">
             Figures are from the demo scenario, not a live deployment.
           </p>
         </div>
@@ -459,7 +459,7 @@ export default function SmartGuide() {
         </div>
 
         <div className="mt-14 flex flex-wrap items-center gap-6 border-t border-line pt-10">
-          <p className="max-w-xl font-luxe text-[1.32rem] italic leading-relaxed text-ink/50">
+          <p className="max-w-xl font-luxe text-[1.08rem] italic leading-relaxed text-ink/50">
             Every rate on this page is the pressure engine talking. Nothing here is a
             promotion.
           </p>

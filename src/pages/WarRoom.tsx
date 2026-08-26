@@ -510,7 +510,7 @@ export default function WarRoom() {
                   >
                     <Check className="h-7 w-7 text-ember-400" strokeWidth={1.4} />
                     <p className="tele text-ink/45">ALL ZONES BELOW WATCH LINE</p>
-                    <p className="font-luxe text-[1.2rem] italic text-ink/40">
+                    <p className="font-luxe text-[0.98rem] italic text-ink/40">
                       Nothing to act on. This is what success looks like.
                     </p>
                   </motion.div>
@@ -646,7 +646,7 @@ export default function WarRoom() {
             padded={false}
           >
             {sim.dispatched.length === 0 ? (
-              <p className="px-6 py-16 text-center font-luxe text-[1.2rem] italic text-ink/40">
+              <p className="px-6 py-16 text-center font-luxe text-[0.98rem] italic text-ink/40">
                 No interventions sent yet.
               </p>
             ) : (
