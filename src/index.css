@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* ────────────────────────────────────────────────────────────────
+   NEXUS design tokens
+
+   Palette is locked to the five supplied swatches. The only additions
+   are tints of the lightest swatch, used as paper and card grounds so
+   surfaces can sit under EMBER-100 rather than compete with it.
+
+   The band scale reads as an inversion, which is deliberate: on paper,
+   the dark maroon is the calm state and the bright oranges are alarm.
+   ──────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* the five */
+  --color-ember-900: #4a0d02;
+  --color-ember-700: #a61304;
+  --color-ember-500: #e85d10;
+  --color-ember-400: #f9843f;
+  --color-ember-100: #fbdbbb;
+
+  /* grounds, tinted from EMBER-100 */
+  --color-paper: #fdf6ee;
+  --color-surface: #fffbf6;
+  --color-raised: #f7e7d3;
+
+  /* ink */
+  --color-ink: #3a0a01;
+  --color-line: #ecd5bb;
+  --color-line-strong: #dcb894;
+
+  /* bands */
+  --color-nominal: #4a0d02;
+  --color-watch: #f9843f;
+  --color-warning: #e85d10;
+  --color-critical: #a61304;
+
+  --font-display: "Milker", "Anton", "Arial Black", system-ui, sans-serif;
+  --font-luxe: "Cormorant Garamond", "Didot", "Times New Roman", serif;
+  --font-tele: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+}
+
+/* ────────────────────────────────────────────────────────────────
+   Fonts
+
+   MILKER is a commercial face and is not redistributable, so it is not
+   vendored here. Drop Milker.woff2 into /public/fonts/ and it is picked
+   up automatically. See public/fonts/README.md.
+
+   Until then the stack falls through to Anton, a heavy condensed
+   grotesque chosen so the layout reads correctly either way.
+   ──────────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: "Milker";
+  src: url("/fonts/Milker.woff2") format("woff2"),
+       url("/fonts/Milker.woff") format("woff"),
+       url("/fonts/Milker.otf") format("opentype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-luxe);
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-ember-500);
+    color: var(--color-paper);
+  }
+
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: var(--color-paper); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line-strong);
+    border: 3px solid var(--color-paper);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-ember-400); }
+}
+
+@layer components {
+  /* Small uppercase telemetry label, the workhorse of the console */
+  .tele {
+    font-family: var(--font-tele);
+    font-size: 0.625rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .num {
+    font-family: var(--font-tele);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  .display {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.88;
+  }
+
+  .panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    position: relative;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+}
+
+@keyframes nexus-pulse {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50%      { opacity: 0.62; transform: scale(1.07); }
+}
+@keyframes nexus-sweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes nexus-ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes nexus-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
