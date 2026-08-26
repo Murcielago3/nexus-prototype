@@ -1,5 +1,5 @@
 import { motion, useInView } from 'motion/react'
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 /* ============================================================
@@ -50,6 +50,61 @@ export function SplitText({
           })}
           {w < words.length - 1 && <span className="inline-block">&nbsp;</span>}
         </span>
+      ))}
+    </As>
+  )
+}
+
+/* ============================================================
+   MaskText
+   Words rise from behind a clipping edge, one weighted motion with
+   a short stagger. No rotation, no per character scatter. This is
+   the reveal for section headers, where the point is gravity rather
+   than personality.
+   ============================================================ */
+
+export function MaskText({
+  text,
+  className,
+  delay = 0,
+  stagger = 0.045,
+  as: As = 'span',
+}: {
+  text: string
+  className?: string
+  delay?: number
+  stagger?: number
+  as?: 'span' | 'h1' | 'h2' | 'h3'
+}) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true, amount: 0.3 })
+  const words = text.split(' ')
+
+  return (
+    <As ref={ref as never} className={cn('inline-block', className)}>
+      {words.map((word, i) => (
+        <Fragment key={i}>
+          <span
+            // the padding keeps descenders from being clipped by the mask, the
+            // negative margin pays it back so the baseline does not move
+            className="inline-block -mb-[0.09em] overflow-hidden pb-[0.09em] align-bottom"
+          >
+            <motion.span
+              className="inline-block will-change-transform"
+              initial={{ y: '110%' }}
+              animate={inView ? { y: '0%' } : undefined}
+              transition={{
+                duration: 1.05,
+                delay: delay + i * stagger,
+                ease: [0.22, 1, 0.28, 1],
+              }}
+            >
+              {word}
+            </motion.span>
+          </span>
+          {/* a real space between the masks, so long titles still wrap */}
+          {i < words.length - 1 ? ' ' : null}
+        </Fragment>
       ))}
     </As>
   )

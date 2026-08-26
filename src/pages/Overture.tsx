@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Compass, Crosshair, Gauge, Radio, Route, ShieldAlert } from 'lucide-react'
 import { Globe } from '@/components/Globe'
-import { CountUp, DecryptedText, ScrollReveal, ShinyText, SplitText } from '@/components/bits/Text'
+import { CountUp, DecryptedText, MaskText, ScrollReveal, ShinyText, SplitText } from '@/components/bits/Text'
 import { Aurora, Magnet, Parallax, SpotlightCard, TiltCard } from '@/components/bits/Surfaces'
 import { EVENTS, HOST_CITY, ZONES } from '@/data/city'
 import { SCENARIO_MARKS } from '@/data/mock'
@@ -20,32 +20,31 @@ function Eyebrow({ children, className }: { children: React.ReactNode; className
   )
 }
 
-function SectionHead({
-  index,
-  eyebrow,
-  title,
-  lede,
-}: {
-  index: string
-  eyebrow: string
-  title: string
-  lede?: string
-}) {
+function SectionHead({ title, lede }: { title: string; lede?: string }) {
   return (
     <div className="mb-16 max-w-3xl">
-      <div className="mb-5 flex items-baseline gap-4">
-        <span className="num text-[0.68rem] tracking-[0.2em] text-ink/35">{index}</span>
-        <Eyebrow>{eyebrow}</Eyebrow>
-      </div>
-      <SplitText
+      <motion.span
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.28, 1] }}
+        className="mb-7 block h-px w-14 origin-left bg-ember-500"
+      />
+      <MaskText
         as="h2"
         text={title}
         className="display text-balance text-[clamp(2rem,4.8vw,3.7rem)] text-ink"
       />
       {lede && (
-        <p className="mt-7 max-w-2xl text-pretty font-luxe text-[1.5rem] leading-relaxed text-ink/62">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.9, delay: 0.28, ease: [0.22, 1, 0.28, 1] }}
+          className="mt-7 max-w-2xl text-pretty font-luxe text-[1.5rem] leading-relaxed text-ink/62"
+        >
           {lede}
-        </p>
+        </motion.p>
       )}
     </div>
   )
@@ -208,7 +207,6 @@ function Manifesto() {
       </Parallax>
 
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <Eyebrow className="justify-center">The premise</Eyebrow>
         <ScrollReveal className="mt-10 text-balance font-luxe text-[clamp(1.7rem,3.8vw,2.95rem)] leading-[1.36] text-ink">
           Everyone else builds a dashboard that tells you what already happened. A rear view
           mirror. NEXUS is a steering wheel. It watches pressure build across every hotel,
@@ -262,8 +260,6 @@ function Organs() {
     <section className="border-t border-line py-28 sm:py-36">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8">
         <SectionHead
-          index="01 / 04"
-          eyebrow="The core"
           title="THREE ORGANS, ONE NERVOUS SYSTEM."
           lede="Nothing here is a black box. Each layer can be explained in a sentence and challenged on stage, which is exactly the point."
         />
@@ -320,8 +316,6 @@ function Chain() {
         <div className="grid items-center gap-16 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <SectionHead
-              index="02 / 04"
-              eyebrow="Explainability"
               title="SHOW THE REASONING, NOT THE VERDICT."
               lede="A red zone tells an operator nothing they can act on. Every NEXUS alert carries the full chain that produced it, so the person on shift can agree with it, override it, or argue with it."
             />
@@ -415,8 +409,6 @@ function Interfaces() {
     <section className="border-t border-line py-28 sm:py-36">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8">
         <SectionHead
-          index="03 / 04"
-          eyebrow="Two surfaces"
           title="ONE SPINE. TWO VERY DIFFERENT ROOMS."
           lede="The operator and the visitor need opposite things from the same numbers. One needs density and control. The other needs a single clear instruction."
         />
@@ -467,8 +459,6 @@ function Timeline() {
     <section className="border-t border-line py-28 sm:py-36">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-8">
         <SectionHead
-          index="04 / 04"
-          eyebrow="The night it matters"
           title="MATCHDAY 11. FORTY THOUSAND LEAVE AT ONCE."
           lede="The scripted scenario the console is built around. Every beat below is reproducible in the War Room."
         />
@@ -534,9 +524,8 @@ function Closer() {
     <section className="relative overflow-hidden border-t border-line py-36">
       <Aurora intensity={0.55} />
       <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <Eyebrow className="justify-center">Ready when you are</Eyebrow>
-        <h2 className="mt-8">
-          <SplitText
+        <h2>
+          <MaskText
             text="THE CITY IS ALREADY TALKING."
             className="display block text-[clamp(2rem,5.4vw,4.2rem)] text-ink"
           />

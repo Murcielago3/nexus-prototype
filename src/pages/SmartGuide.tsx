@@ -283,12 +283,7 @@ export default function SmartGuide() {
 
         {/* ── the explainer beside it ── */}
         <div className="flex flex-col justify-center">
-          <div className="flex items-center gap-3">
-            <span className="h-px w-8 bg-ember-500/70" />
-            <span className="tele text-ember-500">The visitor side</span>
-          </div>
-
-          <h2 className="display mt-6 text-[clamp(2rem,4.4vw,3.4rem)] leading-[0.92] text-ink">
+          <h2 className="display text-[clamp(2rem,4.4vw,3.4rem)] leading-[0.92] text-ink">
             A RECOMMENDATION
             <br />
             NOBODY
