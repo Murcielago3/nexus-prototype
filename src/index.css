@@ -117,7 +117,9 @@
     font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: -0.01em;
-    line-height: 0.88;
+    /* Heavy condensed faces set very tight by default and the caps end up
+       almost touching across a line break. This buys the gap back. */
+    line-height: 1.06;
   }
 
   .panel {

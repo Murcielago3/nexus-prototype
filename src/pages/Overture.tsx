@@ -161,13 +161,6 @@ function Hero() {
         </motion.div>
       </div>
 
-      <motion.div
-        style={{ opacity: fade }}
-        className="absolute bottom-7 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
-      >
-        <span className="tele text-ink/30">SCROLL</span>
-        <span className="h-9 w-px bg-gradient-to-b from-ember-500 to-transparent" />
-      </motion.div>
     </section>
   )
 }
