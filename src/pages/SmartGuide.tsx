@@ -170,7 +170,7 @@ export default function SmartGuide() {
   const liveNudge = sim.dispatched[0]
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-paper pt-14">
+    <div className="relative min-h-screen overflow-hidden bg-paper pt-14 font-tele">
       <Aurora intensity={0.4} />
 
       <div className="relative mx-auto grid max-w-[1500px] gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-16 lg:py-16">
@@ -232,7 +232,7 @@ export default function SmartGuide() {
               <h1 className="display mb-1 text-[1.55rem] leading-[1.05] text-ink">
                 WHERE SHOULD YOU GO RIGHT NOW?
               </h1>
-              <p className="mb-6 font-luxe text-[1.02rem] italic text-ink/48">
+              <p className="mb-6 font-luxe text-[1.18rem] italic text-ink/48">
                 Three options, ranked by what the city can actually absorb tonight.
               </p>
 
@@ -296,7 +296,7 @@ export default function SmartGuide() {
             <span className="text-ember-500">ARGUES WITH.</span>
           </h2>
 
-          <p className="mt-7 max-w-lg text-pretty text-[0.98rem] leading-relaxed text-ink/55">
+          <p className="mt-7 max-w-lg text-pretty font-luxe text-[1.32rem] leading-relaxed text-ink/62">
             Crowd control fails when people feel pushed. So the Smart Guide never hides its
             reasoning. Every card leads with the number that produced it, which turns an
             instruction into an obvious choice.
@@ -316,7 +316,7 @@ export default function SmartGuide() {
             ].map((c) => (
               <div key={c.k} className="bg-paper p-6">
                 <div className="tele mb-3 text-ink/45">{c.k}</div>
-                <p className="text-[0.88rem] leading-relaxed text-ink/62">{c.v}</p>
+                <p className="text-[0.82rem] leading-relaxed text-ink/62">{c.v}</p>
               </div>
             ))}
           </div>
@@ -336,7 +336,7 @@ export default function SmartGuide() {
             ))}
           </div>
 
-          <p className="mt-8 font-luxe text-[1.08rem] italic leading-relaxed text-ink/42">
+          <p className="mt-8 font-luxe text-[1.24rem] italic leading-relaxed text-ink/42">
             Figures shown are from the demo scenario, not a live deployment.
           </p>
         </div>

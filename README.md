@@ -70,6 +70,13 @@ calm state and the bright oranges are alarm.
 | Luxury serif | Cormorant Garamond |
 | Telemetry and numerals | JetBrains Mono |
 
+Cormorant has a small x-height and reads roughly a quarter smaller than a sans
+at the same declared size, so every serif size here is set larger than it looks
+on paper. Do not "normalise" those numbers downward.
+
+The landing page runs on the serif. Both dashboards default to the mono, which
+is the right voice for a console and keeps dense small text legible.
+
 Milker is commercial and is not vendored here. Drop the licensed file into
 `public/fonts/` and it is picked up with no code change. See
 `public/fonts/README.md`.
@@ -77,7 +84,9 @@ Milker is commercial and is not vendored here. Drop the licensed file into
 ## Motion
 
 - **Lenis** drives inertial scrolling site wide, and is deliberately disabled on
-  the War Room so an operator lands exactly where they let go.
+  the War Room so an operator lands exactly where they let go. Two things break
+  it silently: any `scroll-behavior: smooth` in CSS, and forgetting to import
+  `lenis/dist/lenis.css`. Both are handled, do not reintroduce either.
 - **Framer Motion** handles the reveals, parallax and layout transitions.
 - `src/components/bits/` holds the React Bits style primitives: `SplitText`,
   `DecryptedText`, `ShinyText`, `CountUp`, `ScrollReveal`, `Aurora`, `Particles`,

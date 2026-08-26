@@ -69,9 +69,8 @@
     border-color: var(--color-line);
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
+  /* Lenis owns scrolling. A native scroll-behavior here fights it and the
+     result is no smoothing at all, so it is deliberately absent. */
 
   body {
     background-color: var(--color-paper);

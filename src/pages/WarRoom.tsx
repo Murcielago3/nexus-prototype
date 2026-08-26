@@ -321,7 +321,7 @@ export default function WarRoom() {
   }
 
   return (
-    <div className="min-h-screen bg-paper pt-14">
+    <div className="min-h-screen bg-paper pt-14 font-tele">
       {/* ───────── console bar ───────── */}
       <div className="sticky top-14 z-40 border-b border-line bg-paper/95 backdrop-blur">
         <div className="mx-auto max-w-[1800px]">
@@ -597,7 +597,7 @@ export default function WarRoom() {
                   >
                     <Check className="h-6 w-6 text-ink/45" strokeWidth={1.4} />
                     <p className="tele text-ink/40">ALL ZONES BELOW WATCH LINE</p>
-                    <p className="font-luxe text-[0.95rem] italic text-ink/38">
+                    <p className="font-luxe text-[1.12rem] italic text-ink/38">
                       Nothing to act on. This is what success looks like.
                     </p>
                   </motion.div>
@@ -639,7 +639,7 @@ export default function WarRoom() {
               {lowerTab === 'log' ? (
                 <div className="max-h-64 overflow-y-auto">
                   {sim.dispatched.length === 0 ? (
-                    <p className="px-4 py-8 text-center font-luxe text-[1rem] italic text-ink/35">
+                    <p className="px-4 py-8 text-center font-luxe text-[1.15rem] italic text-ink/35">
                       No interventions sent yet.
                     </p>
                   ) : (
