@@ -3,10 +3,16 @@ import { ZONE_BY_ID } from '@/data/city'
 import { buildIntervention, getRecommendations, getSnapshot } from '@/data/mock'
 import type { Intervention } from '@/data/types'
 
+/**
+ * Sim minutes advanced per real second. The old baseline of 6 pushed the whole
+ * 220 minute scenario past in half a minute, which is faster than anyone can
+ * read a card. 1X now takes about seven minutes end to end, and roughly a
+ * minute to reach the moment Z-01 goes critical.
+ */
 export const SPEEDS = [
-  { label: '1X', minutesPerSecond: 1 },
-  { label: '6X', minutesPerSecond: 6 },
-  { label: '20X', minutesPerSecond: 20 },
+  { label: '1X', minutesPerSecond: 0.5 },
+  { label: '2X', minutesPerSecond: 1 },
+  { label: '8X', minutesPerSecond: 4 },
 ]
 
 /** Opens on the build toward the final, which is the interesting part. */
@@ -21,7 +27,7 @@ const MAX_CLOCK = 520
 export function useSimClock() {
   const [clock, setClock] = useState(START_CLOCK)
   const [playing, setPlaying] = useState(true)
-  const [speedIndex, setSpeedIndex] = useState(1)
+  const [speedIndex, setSpeedIndex] = useState(0)
   const [dispatched, setDispatched] = useState<Intervention[]>([])
   const [divertedTotal, setDivertedTotal] = useState(0)
   const relief = useRef<Record<string, number>>({})
