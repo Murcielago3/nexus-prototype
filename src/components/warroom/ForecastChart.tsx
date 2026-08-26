@@ -4,11 +4,11 @@ import type { ZoneForecast } from '@/data/types'
 import { cn } from '@/lib/utils'
 
 const W = 320
-const H = 118
+const H = 150
 const L = 26
 const R = 8
 const T = 8
-const B = 18
+const B = 22
 
 function sx(t: number, horizon: number) {
   return L + (t / horizon) * (W - L - R)
@@ -64,7 +64,7 @@ export function ForecastChart({
             strokeDasharray="2 3"
             opacity="0.4"
           />
-          <text x={2} y={sy(BANDS[b].min) + 2.4} fontSize="6.5" fontFamily="var(--font-tele)" fill={BANDS[b].color} opacity="0.7">
+          <text x={2} y={sy(BANDS[b].min) + 2.4} fontSize="5.6" fontFamily="var(--font-tele)" fill={BANDS[b].color} opacity="0.7">
             {BANDS[b].min}
           </text>
         </g>
@@ -93,7 +93,7 @@ export function ForecastChart({
           <text
             x={sx(eta, horizonMinutes) + 4}
             y={T + 8}
-            fontSize="7"
+            fontSize="6.2"
             fontFamily="var(--font-tele)"
             fontWeight="700"
             fill="var(--color-critical)"
@@ -114,7 +114,7 @@ export function ForecastChart({
           x={sx(t, horizonMinutes)}
           y={H - B + 9}
           textAnchor="middle"
-          fontSize="6.5"
+          fontSize="5.6"
           fontFamily="var(--font-tele)"
           fill="var(--color-ink)"
           opacity="0.38"

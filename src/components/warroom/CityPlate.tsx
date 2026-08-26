@@ -1,12 +1,13 @@
+import { useState } from 'react'
 import { ZONE_BY_ID } from '@/data/city'
 import { BANDS } from '@/data/types'
 import type { Snapshot } from '@/data/types'
 import { cn } from '@/lib/utils'
 
 const W = 160
-const H = 100
-const PAD_X = 10
-const PAD_Y = 9
+const H = 96
+const PAD_X = 12
+const PAD_Y = 11
 
 function px(x: number) {
   return PAD_X + x * (W - PAD_X * 2)
@@ -16,8 +17,12 @@ function py(y: number) {
 }
 
 /**
- * Schematic pressure plate. Not a street map on purpose: an operator
- * scanning this at a glance needs topology and load, not geography.
+ * Schematic pressure plate. Not a street map on purpose: an operator scanning
+ * this at a glance needs topology and load, not geography.
+ *
+ * Every label here sets its size with the SVG fontSize attribute and nothing
+ * else. A CSS font-size class on an SVG text node is read in user units, which
+ * on a 160 wide viewBox renders enormous.
  */
 export function CityPlate({
   snapshot,
@@ -31,42 +36,24 @@ export function CityPlate({
   className?: string
 }) {
   const byId = Object.fromEntries(snapshot.pressures.map((p) => [p.zoneId, p]))
+  const [hovered, setHovered] = useState<string | null>(null)
 
   return (
     <div className={cn('relative', className)}>
       <svg viewBox={`0 0 ${W} ${H}`} className="h-full w-full" role="img" aria-label="Zone pressure plate">
         <defs>
-          <pattern id="plate-grid" width="8" height="8" patternUnits="userSpaceOnUse">
-            <path d="M8 0H0V8" fill="none" stroke="var(--color-line-strong)" strokeWidth="0.12" opacity="0.5" />
+          <pattern id="plate-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+            <path d="M10 0H0V10" fill="none" stroke="var(--color-line)" strokeWidth="0.15" />
           </pattern>
-          <radialGradient id="plate-vignette">
-            <stop offset="55%" stopColor="transparent" />
-            <stop offset="100%" stopColor="var(--color-paper)" />
-          </radialGradient>
           {Object.entries(BANDS).map(([band, meta]) => (
             <radialGradient key={band} id={`glow-${band}`}>
-              <stop offset="0%" stopColor={meta.color} stopOpacity="0.5" />
+              <stop offset="0%" stopColor={meta.color} stopOpacity="0.26" />
               <stop offset="100%" stopColor={meta.color} stopOpacity="0" />
             </radialGradient>
           ))}
         </defs>
 
         <rect width={W} height={H} fill="url(#plate-grid)" />
-
-        {/* sector labels */}
-        {['SECTOR A', 'SECTOR B', 'SECTOR C', 'SECTOR D', 'SECTOR E', 'SECTOR F'].map((s, i) => (
-          <text
-            key={s}
-            x={PAD_X + (i % 3) * 47}
-            y={PAD_Y - 3 + Math.floor(i / 3) * 88}
-            className="tele"
-            fill="var(--color-line-strong)"
-            fontSize="2.1"
-            letterSpacing="0.5"
-          >
-            {s}
-          </text>
-        ))}
 
         {/* transit links */}
         {snapshot.links.map((l) => {
@@ -75,31 +62,16 @@ export function CityPlate({
           if (!a || !b) return null
           const hot = l.load > 0.72
           return (
-            <g key={l.id}>
-              <line
-                x1={px(a.x)}
-                y1={py(a.y)}
-                x2={px(b.x)}
-                y2={py(b.y)}
-                stroke={hot ? 'var(--color-ember-500)' : 'var(--color-line-strong)'}
-                strokeWidth={0.22 + l.load * 0.75}
-                opacity={0.35 + l.load * 0.5}
-              />
-              {hot && (
-                <line
-                  x1={px(a.x)}
-                  y1={py(a.y)}
-                  x2={px(b.x)}
-                  y2={py(b.y)}
-                  stroke="var(--color-ember-400)"
-                  strokeWidth="0.5"
-                  strokeDasharray="1.5 4"
-                  opacity="0.9"
-                >
-                  <animate attributeName="stroke-dashoffset" from="11" to="0" dur="1.1s" repeatCount="indefinite" />
-                </line>
-              )}
-            </g>
+            <line
+              key={l.id}
+              x1={px(a.x)}
+              y1={py(a.y)}
+              x2={px(b.x)}
+              y2={py(b.y)}
+              stroke={hot ? 'var(--color-ember-500)' : 'var(--color-line-strong)'}
+              strokeWidth={hot ? 0.5 : 0.28}
+              opacity={hot ? 0.85 : 0.6}
+            />
           )
         })}
 
@@ -108,8 +80,9 @@ export function CityPlate({
           const p = byId[z.id]
           if (!p) return null
           const meta = BANDS[p.band]
-          const r = 1.9 + (z.capacity / 62_000) * 2.6
+          const r = 2.4 + (z.capacity / 62_000) * 2.4
           const isSelected = selected === z.id
+          const isHovered = hovered === z.id
           const alarming = p.band === 'warning' || p.band === 'critical'
 
           return (
@@ -117,71 +90,75 @@ export function CityPlate({
               key={z.id}
               transform={`translate(${px(z.x)} ${py(z.y)})`}
               onClick={() => onSelect(z.id)}
+              onMouseEnter={() => setHovered(z.id)}
+              onMouseLeave={() => setHovered(null)}
               className="cursor-pointer"
             >
-              {/* pressure halo */}
-              <circle r={r * 3.6} fill={`url(#glow-${p.band})`} opacity={0.35 + (p.score / 100) * 0.65} />
+              <circle r={r * 3.2} fill={`url(#glow-${p.band})`} />
 
               {alarming && (
                 <circle
-                  r={r + 2.2}
+                  r={r + 2}
                   fill="none"
                   stroke={meta.color}
-                  strokeWidth="0.28"
-                  style={{ animation: 'nexus-pulse 1.6s ease-in-out infinite', transformOrigin: 'center' }}
+                  strokeWidth="0.3"
+                  style={{ animation: 'nexus-pulse 1.8s ease-in-out infinite', transformOrigin: 'center' }}
                 />
               )}
 
               {isSelected && (
-                <>
-                  <circle r={r + 4.4} fill="none" stroke="var(--color-ember-500)" strokeWidth="0.22" strokeDasharray="1 2" />
-                  {[0, 90, 180, 270].map((d) => (
-                    <line
-                      key={d}
-                      x1="0"
-                      y1={-(r + 5.6)}
-                      x2="0"
-                      y2={-(r + 3.6)}
-                      stroke="var(--color-ember-500)"
-                      strokeWidth="0.35"
-                      transform={`rotate(${d})`}
-                    />
-                  ))}
-                </>
+                <circle
+                  r={r + 3.4}
+                  fill="none"
+                  stroke="var(--color-ember-500)"
+                  strokeWidth="0.35"
+                  strokeDasharray="1.2 1.8"
+                />
               )}
 
-              <circle r={r} fill="var(--color-surface)" stroke={meta.color} strokeWidth="0.42" />
-              <circle r={r * Math.min(p.occupancy / p.capacity, 1) * 0.92} fill={meta.color} opacity="0.85" />
+              {/* the ring is the zone, the inner disc is how full it is */}
+              <circle r={r} fill="var(--color-surface)" stroke={meta.color} strokeWidth="0.55" />
+              <circle r={r * Math.min(p.occupancy / p.capacity, 1) * 0.86} fill={meta.color} />
 
               <text
-                y={r + 3.3}
+                y={r + 4.4}
                 textAnchor="middle"
-                fontSize="2.2"
+                fontSize="2.9"
                 fontFamily="var(--font-tele)"
-                letterSpacing="0.22"
-                fill={isSelected ? 'var(--color-ink)' : 'var(--color-ink)'}
-                opacity={isSelected ? 1 : 0.62}
+                fontWeight={isSelected || isHovered ? 700 : 500}
+                fill="var(--color-ink)"
+                opacity={isSelected || isHovered ? 0.95 : 0.55}
               >
                 {z.code}
               </text>
               <text
-                y={r + 6.2}
+                y={r + 8.4}
                 textAnchor="middle"
-                fontSize="2.4"
+                fontSize="3.2"
                 fontFamily="var(--font-tele)"
                 fontWeight="700"
                 fill={meta.color}
-                opacity={alarming ? 1 : 0.72}
               >
                 {p.score.toFixed(0)}
               </text>
             </g>
           )
         })}
-
-        <rect width={W} height={H} fill="url(#plate-vignette)" pointerEvents="none" />
       </svg>
 
+      {/* the full name only when it is asked for, so the plate stays quiet */}
+      {hovered && ZONE_BY_ID[hovered] && (
+        <div
+          className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full whitespace-nowrap border border-line bg-surface px-3 py-2 shadow-sm"
+          style={{
+            left: (px(ZONE_BY_ID[hovered].x) / W) * 100 + '%',
+            top: (py(ZONE_BY_ID[hovered].y) / H) * 100 - 4 + '%',
+          }}
+        >
+          <div className="tele text-ink/45">{ZONE_BY_ID[hovered].sector}</div>
+          <div className="num mt-0.5 text-[0.74rem] font-bold text-ink">{ZONE_BY_ID[hovered].name}</div>
+        </div>
+      )}
     </div>
   )
 }
