@@ -374,14 +374,14 @@ export function GlitchText({ text, className }: { text: string; className?: stri
       <span className="relative z-10">{text}</span>
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 text-ember-500"
+        className="pointer-events-none absolute inset-0 text-ember-700"
         style={{ animation: 'gl-a 2.6s steps(2,end) infinite' }}
       >
         {text}
       </span>
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 text-ink/45"
+        className="pointer-events-none absolute inset-0 text-ink/62"
         style={{ animation: 'gl-a 3.4s steps(2,end) infinite reverse' }}
       >
         {text}

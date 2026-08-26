@@ -27,8 +27,8 @@ const SHELL = 'mx-auto w-full max-w-[1440px] px-6 sm:px-10'
 function StatusBar({ time }: { time: string }) {
   return (
     <div className="flex items-center justify-between px-6 pb-2 pt-4">
-      <span className="num text-[0.72rem] font-bold text-ink/80">{time}</span>
-      <div className="flex items-center gap-1.5 text-ink/55">
+      <span className="num text-[0.72rem] font-bold text-ink/90">{time}</span>
+      <div className="flex items-center gap-1.5 text-ink/74">
         <Signal className="h-3 w-3" strokeWidth={2.4} />
         <Wifi className="h-3 w-3" strokeWidth={2.4} />
         <span className="ml-0.5 h-2.5 w-5 rounded-[2px] border border-ink/40 p-[1.5px]">
@@ -44,25 +44,25 @@ function PhonePick({ rec }: { rec: GuideRecommendation }) {
   const load = rec.pressure.occupancy / rec.pressure.capacity
   return (
     <article className="border border-line bg-paper p-5">
-      <div className="tele mb-3 text-ember-500">BEST MOVE RIGHT NOW</div>
+      <div className="tele mb-3 text-ember-700">BEST MOVE RIGHT NOW</div>
 
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h3 className="display text-[1.35rem] text-ink">{rec.zone.name}</h3>
-          <div className="num mt-1.5 text-[0.66rem] tracking-[0.16em] text-ink/40">
+          <div className="num mt-1.5 text-[0.66rem] tracking-[0.16em] text-ink/62">
             {rec.zone.code} · {rec.zone.sector}
           </div>
         </div>
         <div className="shrink-0 text-right">
           <div className="display text-[1.5rem] leading-none text-ember-700">{inr(rec.rateInr)}</div>
-          <div className="tele mt-1.5 text-ink/40">PER NIGHT</div>
+          <div className="tele mt-1.5 text-ink/62">PER NIGHT</div>
         </div>
       </div>
 
       <div className="mt-5">
         <div className="mb-2 flex items-baseline justify-between">
-          <span className="tele text-ink/45">CURRENT CROWDING</span>
-          <span className="num text-[0.72rem] font-bold" style={{ color: BANDS[rec.pressure.band].color }}>
+          <span className="tele text-ink/62">CURRENT CROWDING</span>
+          <span className="num text-[0.72rem] font-bold" style={{ color: BANDS[rec.pressure.band].text }}>
             {(load * 100).toFixed(0)}%
           </span>
         </div>
@@ -76,34 +76,34 @@ function PhonePick({ rec }: { rec: GuideRecommendation }) {
         </div>
       </div>
 
-      <p className="mt-5 border-l-2 border-ember-500 pl-4 text-[0.78rem] leading-relaxed text-ink/62">
+      <p className="mt-5 border-l-2 border-ember-500 pl-4 text-[0.78rem] leading-relaxed text-ink/80">
         {rec.reason}
       </p>
 
       <div className="mt-5 grid grid-cols-3 gap-4 border-t border-line pt-4">
         <div>
-          <Clock className="mb-2 h-3.5 w-3.5 text-ink/35" strokeWidth={1.8} />
+          <Clock className="mb-2 h-3.5 w-3.5 text-ink/62" strokeWidth={1.8} />
           <div className="num text-[0.88rem] font-bold text-ink">{rec.travelMinutes}m</div>
-          <div className="tele mt-0.5 text-ink/35">TRAVEL</div>
+          <div className="tele mt-0.5 text-ink/62">TRAVEL</div>
         </div>
         <div>
-          <BedDouble className="mb-2 h-3.5 w-3.5 text-ink/35" strokeWidth={1.8} />
+          <BedDouble className="mb-2 h-3.5 w-3.5 text-ink/62" strokeWidth={1.8} />
           <div className="num text-[0.88rem] font-bold text-ember-700">{rec.savingsPct}%</div>
-          <div className="tele mt-0.5 text-ink/35">OFF PEAK</div>
+          <div className="tele mt-0.5 text-ink/62">OFF PEAK</div>
         </div>
         <div>
-          <TrainFront className="mb-2 h-3.5 w-3.5 text-ink/35" strokeWidth={1.8} />
+          <TrainFront className="mb-2 h-3.5 w-3.5 text-ink/62" strokeWidth={1.8} />
           <div className="num text-[0.88rem] font-bold text-ink">
             {(rec.zone.transportConnectivity * 10).toFixed(1)}
           </div>
-          <div className="tele mt-0.5 text-ink/35">TRANSIT</div>
+          <div className="tele mt-0.5 text-ink/62">TRANSIT</div>
         </div>
       </div>
 
       {rec.incentiveInr > 0 && (
         <div className="mt-5 flex items-start gap-3 border border-ember-500/45 bg-raised px-4 py-3.5">
           <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-ember-500" strokeWidth={1.8} />
-          <p className="text-[0.76rem] leading-relaxed text-ink/70">
+          <p className="text-[0.76rem] leading-relaxed text-ink/84">
             <span className="font-bold text-ember-700">{inr(rec.incentiveInr)} back</span> if you check
             in after 22:00. Travelling off peak keeps the interchange clear for everyone.
           </p>
@@ -112,7 +112,7 @@ function PhonePick({ rec }: { rec: GuideRecommendation }) {
 
       <button
         type="button"
-        className="mt-5 flex w-full items-center justify-center gap-3 bg-ember-500 py-3.5 text-paper transition-colors hover:bg-ember-700"
+        className="mt-5 flex w-full items-center justify-center gap-3 bg-ember-700 py-3.5 text-paper transition-colors hover:bg-ember-900"
       >
         <Navigation className="h-3.5 w-3.5" strokeWidth={2.2} />
         <span className="tele font-bold">TAKE ME THERE</span>
@@ -134,12 +134,12 @@ function OptionCard({ rec, rank }: { rec: GuideRecommendation; rank: number }) {
       className="panel flex flex-col p-7"
     >
       <div className="mb-5 flex items-center justify-between">
-        <span className="tele text-ink/40">{rank === 0 ? 'TOP PICK' : 'OPTION ' + (rank + 1)}</span>
+        <span className="tele text-ink/62">{rank === 0 ? 'TOP PICK' : 'OPTION ' + (rank + 1)}</span>
         <span
           className="tele border px-2 py-1"
           style={{
-            color: BANDS[rec.pressure.band].color,
-            borderColor: BANDS[rec.pressure.band].color + '55',
+            color: BANDS[rec.pressure.band].text,
+            borderColor: BANDS[rec.pressure.band].color + '77',
           }}
         >
           {(load * 100).toFixed(0)}% FULL
@@ -147,13 +147,13 @@ function OptionCard({ rec, rank }: { rec: GuideRecommendation; rank: number }) {
       </div>
 
       <h3 className="display text-[1.5rem] text-ink">{rec.zone.name}</h3>
-      <div className="num mt-2 text-[0.66rem] tracking-[0.16em] text-ink/40">
+      <div className="num mt-2 text-[0.66rem] tracking-[0.16em] text-ink/62">
         {rec.zone.code} · {rec.zone.sector}
       </div>
 
       <div className="mt-6 flex items-baseline gap-3">
         <span className="display text-[2rem] leading-none text-ember-700">{inr(rec.rateInr)}</span>
-        <span className="tele text-ink/40">PER NIGHT</span>
+        <span className="tele text-ink/62">PER NIGHT</span>
       </div>
 
       <div className="mt-5 h-2 bg-line">
@@ -165,14 +165,14 @@ function OptionCard({ rec, rank }: { rec: GuideRecommendation; rank: number }) {
         />
       </div>
 
-      <p className="mt-6 flex-1 text-[0.8rem] leading-relaxed text-ink/58">{rec.reason}</p>
+      <p className="mt-6 flex-1 text-[0.8rem] leading-relaxed text-ink/76">{rec.reason}</p>
 
       <div className="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
-        <span className="tele border border-line px-2.5 py-1.5 text-ink/50">
+        <span className="tele border border-line px-2.5 py-1.5 text-ink/70">
           {rec.travelMinutes} MIN AWAY
         </span>
         {rec.savingsPct >= 5 && (
-          <span className="tele border border-line px-2.5 py-1.5 text-ink/50">
+          <span className="tele border border-line px-2.5 py-1.5 text-ink/70">
             {rec.savingsPct}% OFF PEAK
           </span>
         )}
@@ -244,7 +244,7 @@ export default function SmartGuide() {
 
             <header className="flex items-center justify-between border-b border-line px-6 pb-4 pt-2">
               <Mark />
-              <span className="tele text-ink/40">SMART GUIDE</span>
+              <span className="tele text-ink/62">SMART GUIDE</span>
             </header>
 
             <div className="max-h-[70vh] overflow-y-auto px-6 pb-8 pt-6">
@@ -276,11 +276,11 @@ export default function SmartGuide() {
               <div className="mb-7 flex items-start gap-3.5 border border-line bg-paper p-5">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ember-500" strokeWidth={1.8} />
                 <div className="min-w-0">
-                  <div className="tele mb-1.5 text-ink/40">YOU ARE HERE</div>
+                  <div className="tele mb-1.5 text-ink/62">YOU ARE HERE</div>
                   <div className="num text-[0.92rem] font-bold text-ink">{hereZone.name}</div>
-                  <p className="mt-2 text-[0.76rem] leading-relaxed text-ink/50">
+                  <p className="mt-2 text-[0.76rem] leading-relaxed text-ink/70">
                     Running at{' '}
-                    <span className="font-bold" style={{ color: BANDS[here.band].color }}>
+                    <span className="font-bold" style={{ color: BANDS[here.band].text }}>
                       {(hereLoad * 100).toFixed(0)}% capacity
                     </span>
                     . Rooms are priced at the peak and the interchange is backing up.
@@ -289,7 +289,7 @@ export default function SmartGuide() {
               </div>
 
               <h1 className="display mb-3 text-[1.5rem] text-ink">WHERE SHOULD YOU GO RIGHT NOW?</h1>
-              <p className="mb-7 font-luxe text-[0.98rem] italic leading-snug text-ink/50">
+              <p className="mb-7 font-luxe text-[0.98rem] italic leading-snug text-ink/70">
                 Ranked by what the city can actually absorb tonight.
               </p>
 
@@ -299,7 +299,7 @@ export default function SmartGuide() {
                 <button
                   type="button"
                   onClick={() => setExpanded((v) => !v)}
-                  className="tele mt-5 w-full border border-line py-3 text-ink/50 transition-colors hover:border-ember-500 hover:text-ink"
+                  className="tele mt-5 w-full border border-line py-3 text-ink/70 transition-colors hover:border-ember-500 hover:text-ink"
                 >
                   {expanded ? 'SHOW FEWER' : 'SHOW ' + (recs.length - 1) + ' MORE OPTIONS'}
                 </button>
@@ -323,7 +323,7 @@ export default function SmartGuide() {
                             <div className="num truncate text-[0.8rem] font-bold text-ink">
                               {r.zone.name}
                             </div>
-                            <div className="tele mt-1 text-ink/40">
+                            <div className="tele mt-1 text-ink/62">
                               {r.travelMinutes} MIN ·{' '}
                               {((r.pressure.occupancy / r.pressure.capacity) * 100).toFixed(0)}% FULL
                             </div>
@@ -338,7 +338,7 @@ export default function SmartGuide() {
                 )}
               </AnimatePresence>
 
-              <p className="mt-8 border-t border-line pt-6 text-[0.74rem] leading-relaxed text-ink/40">
+              <p className="mt-8 border-t border-line pt-6 text-[0.74rem] leading-relaxed text-ink/62">
                 Prices move with real demand, not with what you searched for. When a district
                 empties out, its rate drops and NEXUS shows you why.
               </p>
@@ -355,7 +355,7 @@ export default function SmartGuide() {
                   type="button"
                   className={cn(
                     'flex flex-col items-center gap-2 py-4 transition-colors',
-                    t.active ? 'text-ember-700' : 'text-ink/35 hover:text-ink/60',
+                    t.active ? 'text-ember-700' : 'text-ink/62 hover:text-ink/78',
                   )}
                 >
                   <t.icon className="h-4 w-4" strokeWidth={1.8} />
@@ -381,12 +381,12 @@ export default function SmartGuide() {
             className="display text-balance text-[clamp(2rem,4.6vw,3.6rem)] text-ink"
           />
 
-          <p className="mt-8 max-w-xl text-pretty font-luxe text-[1.22rem] leading-relaxed text-ink/62">
+          <p className="mt-8 max-w-xl text-pretty font-luxe text-[1.22rem] leading-relaxed text-ink/80">
             Crowd control fails the moment people feel pushed. So the Smart Guide never hides
             its reasoning.
           </p>
 
-          <p className="mt-6 max-w-lg text-pretty text-[1.05rem] leading-relaxed text-ink/50">
+          <p className="mt-6 max-w-lg text-pretty text-[1.05rem] leading-relaxed text-ink/70">
             Every card leads with the number that produced it. A cheaper room is not a
             downgrade, it is a district running at twenty seven percent. Say that plainly and
             an instruction becomes an obvious choice.
@@ -399,7 +399,7 @@ export default function SmartGuide() {
               { k: 'RESPONSE', v: 4, suffix: ' MIN' },
             ].map((s) => (
               <div key={s.k} className="bg-paper px-5 py-6">
-                <div className="tele mb-3 text-ink/40">{s.k}</div>
+                <div className="tele mb-3 text-ink/62">{s.k}</div>
                 <div className="display text-[1.75rem] text-ember-700">
                   <CountUp to={s.v} prefix={s.prefix} suffix={s.suffix} />
                 </div>
@@ -407,7 +407,7 @@ export default function SmartGuide() {
             ))}
           </div>
 
-          <p className="mt-7 font-luxe text-[0.98rem] italic leading-relaxed text-ink/42">
+          <p className="mt-7 font-luxe text-[0.98rem] italic leading-relaxed text-ink/62">
             Figures are from the demo scenario, not a live deployment.
           </p>
         </div>
@@ -432,9 +432,9 @@ export default function SmartGuide() {
                 transition={{ duration: 0.75, delay: i * 0.1, ease: [0.22, 1, 0.28, 1] }}
                 className="flex flex-col bg-surface p-8"
               >
-                <span className="num mb-6 text-[0.7rem] tracking-[0.2em] text-ember-500">0{i + 1}</span>
-                <div className="tele mb-4 text-ink/40">{c.k}</div>
-                <p className="text-[0.92rem] leading-relaxed text-ink/70">{c.v}</p>
+                <span className="num mb-6 text-[0.7rem] tracking-[0.2em] text-ember-700">0{i + 1}</span>
+                <div className="tele mb-4 text-ink/62">{c.k}</div>
+                <p className="text-[0.92rem] leading-relaxed text-ink/84">{c.v}</p>
               </motion.div>
             ))}
           </div>
@@ -449,7 +449,7 @@ export default function SmartGuide() {
             text="TONIGHT'S OPTIONS IN FULL."
             className="display text-[clamp(1.8rem,4vw,3rem)] text-ink"
           />
-          <span className="tele text-ink/40">LIVE AT {wallClock(sim.rounded)}</span>
+          <span className="tele text-ink/62">LIVE AT {wallClock(sim.rounded)}</span>
         </div>
 
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
@@ -459,13 +459,13 @@ export default function SmartGuide() {
         </div>
 
         <div className="mt-14 flex flex-wrap items-center gap-6 border-t border-line pt-10">
-          <p className="max-w-xl font-luxe text-[1.08rem] italic leading-relaxed text-ink/50">
+          <p className="max-w-xl font-luxe text-[1.08rem] italic leading-relaxed text-ink/70">
             Every rate on this page is the pressure engine talking. Nothing here is a
             promotion.
           </p>
           <Link
             to="/war-room"
-            className="group ml-auto inline-flex items-center gap-3 border border-line px-7 py-3.5 text-ink/70 transition-colors hover:border-ember-500 hover:text-ink"
+            className="group ml-auto inline-flex items-center gap-3 border border-line px-7 py-3.5 text-ink/84 transition-colors hover:border-ember-500 hover:text-ink"
           >
             <span className="tele">SEE THE OTHER SIDE</span>
             <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />

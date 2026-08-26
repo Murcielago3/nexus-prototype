@@ -22,7 +22,7 @@ function Eyebrow({ children, className }: { children: React.ReactNode; className
   return (
     <div className={cn('flex items-center gap-3', className)}>
       <span className="h-px w-8 bg-ember-500/70" />
-      <span className="tele text-ember-500">{children}</span>
+      <span className="tele text-ember-700">{children}</span>
     </div>
   )
 }
@@ -48,7 +48,7 @@ function SectionHead({ title, lede }: { title: string; lede?: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.9, delay: 0.28, ease: [0.22, 1, 0.28, 1] }}
-          className="mt-7 max-w-2xl text-pretty font-luxe text-[1.22rem] leading-relaxed text-ink/62"
+          className="mt-7 max-w-2xl text-pretty font-luxe text-[1.22rem] leading-relaxed text-ink/80"
         >
           {lede}
         </motion.p>
@@ -97,7 +97,7 @@ function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 1.0, ease: [0.22, 1, 0.28, 1] }}
-            className="mt-9 max-w-lg text-pretty font-luxe text-[1.08rem] italic leading-snug text-ink/72"
+            className="mt-9 max-w-lg text-pretty font-luxe text-[1.08rem] italic leading-snug text-ink/86"
           >
             From reactive firefighting to proactive orchestration.
           </motion.p>
@@ -106,7 +106,7 @@ function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 1.14, ease: [0.22, 1, 0.28, 1] }}
-            className="mt-6 max-w-md text-pretty text-[1rem] leading-relaxed text-ink/50"
+            className="mt-6 max-w-md text-pretty text-[0.87rem] leading-relaxed text-ink/70"
           >
             A million visitors arrive in seventy two hours. Hotels, transit and venues each
             see one tenth of the picture. NEXUS holds all of it at once, and calls the
@@ -122,7 +122,7 @@ function Hero() {
             <Magnet>
               <Link
                 to="/war-room"
-                className="group inline-flex items-center gap-3 bg-ember-500 px-7 py-3.5 text-paper transition-colors hover:bg-ember-700"
+                className="group inline-flex items-center gap-3 bg-ember-700 px-7 py-3.5 text-paper transition-colors hover:bg-ember-900"
               >
                 <span className="tele font-bold">ENTER THE WAR ROOM</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
@@ -131,7 +131,7 @@ function Hero() {
             <Magnet>
               <Link
                 to="/guide"
-                className="group inline-flex items-center gap-3 border border-line-strong px-7 py-3.5 text-ink/75 transition-colors hover:border-ember-500 hover:text-ink"
+                className="group inline-flex items-center gap-3 border border-line-strong px-7 py-3.5 text-ink/88 transition-colors hover:border-ember-500 hover:text-ink"
               >
                 <span className="tele">OPEN SMART GUIDE</span>
                 <Compass className="h-3.5 w-3.5 transition-transform group-hover:rotate-45" />
@@ -145,8 +145,8 @@ function Hero() {
             transition={{ duration: 1.1, delay: 1.52, ease: [0.22, 1, 0.28, 1] }}
             className="mt-12 flex items-center gap-3 border-t border-line pt-5"
           >
-            <span className="tele text-ink/35">LIVE OPERATION</span>
-            <span className="num text-[0.68rem] tracking-[0.14em] text-ink/60">
+            <span className="tele text-ink/62">LIVE OPERATION</span>
+            <span className="num text-[0.68rem] tracking-[0.14em] text-ink/78">
               {HOST_CITY.name} · {HOST_CITY.eventName}
             </span>
           </motion.div>
@@ -180,7 +180,7 @@ function StatBar() {
       <div className="mx-auto grid max-w-[1500px] grid-cols-2 divide-line md:grid-cols-4 md:divide-x">
         {stats.map((s) => (
           <div key={s.k} className="border-b border-line px-6 py-9 md:border-b-0">
-            <div className="tele mb-3 text-ink/40">{s.k}</div>
+            <div className="tele mb-3 text-ink/62">{s.k}</div>
             <div className="display text-[1.85rem] text-ink">
               <CountUp to={s.v} suffix={s.suffix} />
             </div>
@@ -209,7 +209,7 @@ function Manifesto() {
         </ScrollReveal>
         <div className="mt-14 flex items-center justify-center gap-4">
           <span className="h-px w-12 bg-line-strong" />
-          <span className="tele text-ember-500">PREVENTION OVER RESPONSE</span>
+          <span className="tele text-ember-700">PREVENTION OVER RESPONSE</span>
           <span className="h-px w-12 bg-line-strong" />
         </div>
       </div>
@@ -269,17 +269,17 @@ function Organs() {
               >
                 <div className="mb-9 flex items-start justify-between">
                   <o.icon className="h-6 w-6 text-ember-500" strokeWidth={1.4} />
-                  <span className="num text-[0.68rem] tracking-[0.2em] text-ink/30">{o.no}</span>
+                  <span className="num text-[0.68rem] tracking-[0.2em] text-ink/62">{o.no}</span>
                 </div>
 
                 <h3 className="display text-[1.7rem] text-ink">{o.name}</h3>
-                <p className="mt-2 font-luxe text-[0.98rem] italic text-ember-500">{o.sub}</p>
+                <p className="mt-2 font-luxe text-[0.98rem] italic text-ember-700">{o.sub}</p>
 
-                <p className="mt-6 text-[0.99rem] leading-relaxed text-ink/58">{o.body}</p>
+                <p className="mt-6 text-[0.86rem] leading-relaxed text-ink/76">{o.body}</p>
 
                 <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-6">
                   {o.detail.map((d) => (
-                    <span key={d} className="tele text-ink/45">
+                    <span key={d} className="tele text-ink/62">
                       {d}
                     </span>
                   ))}
@@ -313,7 +313,7 @@ function Chain() {
               title="SHOW THE REASONING, NOT THE VERDICT."
               lede="A red zone tells an operator nothing they can act on. Every NEXUS alert carries the full chain that produced it, so the person on shift can agree with it, override it, or argue with it."
             />
-            <p className="max-w-xl font-luxe text-[1.08rem] italic leading-relaxed text-ink/45">
+            <p className="max-w-xl font-luxe text-[1.08rem] italic leading-relaxed text-ink/62">
               This is the difference between a model you trust at 2am and one you mute.
             </p>
           </div>
@@ -321,8 +321,8 @@ function Chain() {
           <TiltCard max={4}>
             <SpotlightCard className="p-8 sm:p-10">
               <div className="mb-9 flex items-center justify-between border-b border-line pb-5">
-                <span className="tele text-ember-500">PREDICTION CHAIN</span>
-                <span className="num text-[0.62rem] tracking-[0.2em] text-ink/35">ALERT #4471</span>
+                <span className="tele text-ember-700">PREDICTION CHAIN</span>
+                <span className="num text-[0.62rem] tracking-[0.2em] text-ink/62">ALERT #4471</span>
               </div>
 
               <ol className="space-y-6">
@@ -345,11 +345,11 @@ function Chain() {
                       {i < CHAIN.length - 1 && <span className="mt-1 w-px flex-1 bg-line" />}
                     </div>
                     <div className="pb-1">
-                      <div className="tele mb-1.5 text-ink/38">{c.k}</div>
+                      <div className="tele mb-1.5 text-ink/62">{c.k}</div>
                       <div
                         className={cn(
                           'font-luxe text-[1.05rem] leading-snug',
-                          i === CHAIN.length - 1 ? 'text-ember-700' : 'text-ink/75',
+                          i === CHAIN.length - 1 ? 'text-ember-700' : 'text-ink/88',
                         )}
                       >
                         {i === CHAIN.length - 1 ? (
@@ -365,7 +365,7 @@ function Chain() {
 
               <div className="mt-9 flex items-center gap-3 border-t border-line pt-6">
                 <ShieldAlert className="h-4 w-4 text-ember-500" strokeWidth={1.5} />
-                <span className="tele text-ink/48">INTERVENTION WINDOW OPEN</span>
+                <span className="tele text-ink/66">INTERVENTION WINDOW OPEN</span>
               </div>
             </SpotlightCard>
           </TiltCard>
@@ -417,22 +417,22 @@ function Interfaces() {
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.85, delay: i * 0.14, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <div className="tele mb-8 text-ember-500">{f.tag}</div>
+                  <div className="tele mb-8 text-ember-700">{f.tag}</div>
                   <h3 className="display text-[clamp(1.9rem,3.6vw,2.9rem)] text-ink">{f.title}</h3>
-                  <p className="mt-6 max-w-lg text-[1rem] leading-relaxed text-ink/58">{f.body}</p>
+                  <p className="mt-6 max-w-lg text-[0.87rem] leading-relaxed text-ink/76">{f.body}</p>
 
                   <div className="mt-9 flex flex-wrap gap-2">
                     {f.points.map((p) => (
                       <span
                         key={p}
-                        className="tele border border-line px-3 py-1.5 text-ink/48 transition-colors group-hover:border-ember-400 group-hover:text-ink/70"
+                        className="tele border border-line px-3 py-1.5 text-ink/66 transition-colors group-hover:border-ember-400 group-hover:text-ink/84"
                       >
                         {p}
                       </span>
                     ))}
                   </div>
 
-                  <div className="mt-11 inline-flex items-center gap-3 text-ember-500">
+                  <div className="mt-11 inline-flex items-center gap-3 text-ember-700">
                     <span className="tele font-bold">{f.cta}</span>
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1.5" />
                   </div>
@@ -469,7 +469,7 @@ function Timeline() {
                 transition={{ duration: 0.7, delay: i * 0.09 }}
                 className="relative"
               >
-                <div className="num mb-4 text-[0.66rem] tracking-[0.2em] text-ember-500">
+                <div className="num mb-4 text-[0.66rem] tracking-[0.2em] text-ember-700">
                   T+{m.clock}
                 </div>
                 <div className="relative mb-6 h-3">
@@ -485,7 +485,7 @@ function Timeline() {
                 <h4 className={cn('display text-[1.02rem]', i === 4 ? 'text-ember-700' : 'text-ink')}>
                   {m.label}
                 </h4>
-                <p className="mt-3 text-[0.92rem] leading-relaxed text-ink/48">{m.note}</p>
+                <p className="mt-3 text-[0.82rem] leading-relaxed text-ink/66">{m.note}</p>
               </motion.div>
             ))}
           </div>
@@ -498,11 +498,11 @@ function Timeline() {
             { k: 'WARNING LEAD TIME', v: 47, suffix: ' MIN', sub: 'before the wall was hit' },
           ].map((s) => (
             <div key={s.k} className="bg-surface px-8 py-10">
-              <div className="tele mb-4 text-ink/40">{s.k}</div>
-              <div className="display text-[2.5rem] text-ember-500">
+              <div className="tele mb-4 text-ink/62">{s.k}</div>
+              <div className="display text-[2.5rem] text-ember-700">
                 <CountUp to={s.v} suffix={s.suffix} />
               </div>
-              <div className="mt-2 font-luxe text-[0.96rem] italic text-ink/45">{s.sub}</div>
+              <div className="mt-2 font-luxe text-[0.96rem] italic text-ink/62">{s.sub}</div>
             </div>
           ))}
         </div>
@@ -524,14 +524,14 @@ function Closer() {
             className="display block text-[clamp(2rem,5.4vw,4.2rem)] text-ink"
           />
         </h2>
-        <p className="mx-auto mt-8 max-w-xl font-luxe text-[1.22rem] italic leading-relaxed text-ink/58">
+        <p className="mx-auto mt-8 max-w-xl font-luxe text-[1.22rem] italic leading-relaxed text-ink/76">
           NEXUS is simply the first thing in the room that listens to all of it at once.
         </p>
         <div className="mt-12 flex justify-center">
           <Magnet>
             <Link
               to="/war-room"
-              className="inline-flex items-center gap-3 bg-ember-500 px-8 py-4 text-paper transition-colors hover:bg-ember-700"
+              className="inline-flex items-center gap-3 bg-ember-700 px-8 py-4 text-paper transition-colors hover:bg-ember-900"
             >
               <Radio className="h-4 w-4" strokeWidth={2} />
               <span className="tele font-bold">GO LIVE</span>
@@ -547,10 +547,10 @@ function Footer() {
   return (
     <footer className="border-t border-line bg-surface">
       <div className="mx-auto flex max-w-[1500px] flex-col gap-4 px-5 py-10 sm:flex-row sm:items-center sm:px-8">
-        <div className="tele text-ink/38">
+        <div className="tele text-ink/62">
           NEXUS · INTELLIGENT EVENT ORCHESTRATION · PROTOTYPE BUILD
         </div>
-        <div className="tele text-ink/32 sm:ml-auto">
+        <div className="tele text-ink/62 sm:ml-auto">
           {EVENTS.length} FIXTURES · {ZONES.length} ZONES · DEMO DATA
         </div>
       </div>
@@ -560,7 +560,7 @@ function Footer() {
 
 export default function Overture() {
   return (
-    <>
+    <div className="font-tele">
       <Hero />
       <StatBar />
       <Manifesto />
@@ -570,6 +570,6 @@ export default function Overture() {
       <Timeline />
       <Closer />
       <Footer />
-    </>
+    </div>
   )
 }

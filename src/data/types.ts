@@ -12,11 +12,26 @@ export type PressureBand = 'nominal' | 'watch' | 'warning' | 'critical'
 export type ZoneKind = 'accommodation' | 'venue' | 'transit' | 'hospitality'
 
 /** Alert thresholds, per the locked spec. */
-export const BANDS: Record<PressureBand, { min: number; label: string; color: string }> = {
-  nominal: { min: 0, label: 'NOMINAL', color: '#fbdbbb' },
-  watch: { min: 70, label: 'WATCH', color: '#f9843f' },
-  warning: { min: 85, label: 'WARNING', color: '#e85d10' },
-  critical: { min: 95, label: 'CRITICAL', color: '#a61304' },
+/**
+ * Two colours per band, because they are not interchangeable on paper.
+ *
+ * `color` is the graphic tone, used for dots, bars, rings and strokes. Those
+ * only need 3:1 against the ground, so the full orange range is available and
+ * the four bands stay clearly distinct at a glance.
+ *
+ * `text` is the type tone. EMBER-500 measures 3.26:1 on paper and EMBER-400
+ * about 2.4:1, so neither clears the 4.5:1 that small text needs. The two
+ * tones that do are EMBER-900 and EMBER-700, which splits the scale where it
+ * matters anyway: dark means the zone is fine, red means act on it.
+ */
+export const BANDS: Record<
+  PressureBand,
+  { min: number; label: string; color: string; text: string }
+> = {
+  nominal: { min: 0, label: 'NOMINAL', color: '#4a0d02', text: '#4a0d02' },
+  watch: { min: 70, label: 'WATCH', color: '#f9843f', text: '#4a0d02' },
+  warning: { min: 85, label: 'WARNING', color: '#e85d10', text: '#a61304' },
+  critical: { min: 95, label: 'CRITICAL', color: '#a61304', text: '#a61304' },
 }
 
 export function bandFor(score: number): PressureBand {

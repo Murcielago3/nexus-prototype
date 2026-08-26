@@ -28,7 +28,7 @@ function Booting() {
           />
           <span className="h-1.5 w-1.5 rounded-full bg-ember-400" />
         </span>
-        <span className="tele text-ink/42">ESTABLISHING LINK</span>
+        <span className="tele text-ink/62">ESTABLISHING LINK</span>
       </div>
     </div>
   )

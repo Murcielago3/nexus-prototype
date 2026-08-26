@@ -59,7 +59,7 @@ export function Nav() {
               className={({ isActive }) =>
                 cn(
                   'tele relative px-3 py-2 transition-colors',
-                  isActive ? 'text-ember-500' : 'text-ink/55 hover:text-ink',
+                  isActive ? 'text-ember-700' : 'text-ink/74 hover:text-ink',
                 )
               }
             >
@@ -80,7 +80,7 @@ export function Nav() {
         </nav>
 
         <div className="ml-auto flex items-center gap-5">
-          <span className="tele hidden text-ink/42 lg:inline">
+          <span className="tele hidden text-ink/62 lg:inline">
             {HOST_CITY.name} · {HOST_CITY.country}
           </span>
           <span className="flex items-center gap-2">
@@ -88,7 +88,7 @@ export function Nav() {
               className="h-1.5 w-1.5 rounded-full bg-ember-500"
               style={{ animation: 'nexus-blink 1.6s steps(1,end) infinite' }}
             />
-            <span className="tele text-ember-500">LIVE</span>
+            <span className="tele text-ember-700">LIVE</span>
           </span>
         </div>
       </div>

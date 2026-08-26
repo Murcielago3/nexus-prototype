@@ -137,7 +137,7 @@ export function CityPlate({
                 fontSize="3.2"
                 fontFamily="var(--font-tele)"
                 fontWeight="700"
-                fill={meta.color}
+                fill={meta.text}
               >
                 {p.score.toFixed(0)}
               </text>
@@ -155,7 +155,7 @@ export function CityPlate({
             top: (py(ZONE_BY_ID[hovered].y) / H) * 100 - 4 + '%',
           }}
         >
-          <div className="tele text-ink/45">{ZONE_BY_ID[hovered].sector}</div>
+          <div className="tele text-ink/62">{ZONE_BY_ID[hovered].sector}</div>
           <div className="num mt-0.5 text-[0.74rem] font-bold text-ink">{ZONE_BY_ID[hovered].name}</div>
         </div>
       )}

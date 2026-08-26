@@ -43,7 +43,7 @@ function Panel({
   return (
     <section className={cn('panel flex flex-col', className)}>
       <header className="flex min-h-[3.5rem] shrink-0 flex-wrap items-center justify-between gap-3 border-b border-line px-6 py-4">
-        <h2 className="tele text-ember-500">{title}</h2>
+        <h2 className="tele text-ember-700">{title}</h2>
         {right}
       </header>
       <div className={cn('flex-1', padded && 'p-6')}>{children}</div>
@@ -60,7 +60,7 @@ function BandTag({ band }: { band: PressureBand }) {
   return (
     <span
       className="tele inline-flex items-center gap-1.5 border px-2 py-1"
-      style={{ color: meta.color, borderColor: meta.color + '55' }}
+      style={{ color: meta.text, borderColor: meta.color + '77' }}
     >
       {(band === 'warning' || band === 'critical') && (
         <span
@@ -88,12 +88,12 @@ function StatTile({
 }) {
   return (
     <div className="flex items-start gap-3.5">
-      <Icon className={cn('mt-1 h-5 w-5 shrink-0', hot ? 'text-ember-500' : 'text-ink/30')} strokeWidth={1.5} />
+      <Icon className={cn('mt-1 h-5 w-5 shrink-0', hot ? 'text-ember-700' : 'text-ink/62')} strokeWidth={1.5} />
       <div>
-        <div className="tele mb-1.5 text-ink/40">{label}</div>
+        <div className="tele mb-1.5 text-ink/62">{label}</div>
         <div className={cn('num text-[1.4rem] font-bold leading-none', hot ? 'text-ember-700' : 'text-ink')}>
           {value}
-          {sub && <span className="ml-1.5 text-[0.7rem] font-normal text-ink/35">{sub}</span>}
+          {sub && <span className="ml-1.5 text-[0.7rem] font-normal text-ink/62">{sub}</span>}
         </div>
       </div>
     </div>
@@ -127,18 +127,18 @@ function ZoneRow({
       <td className="py-4 pl-6 pr-3">
         <div className="flex items-center gap-3">
           <BandDot band={p.band} />
-          <span className="num text-[0.72rem] font-bold tracking-[0.12em] text-ink/60">{zone.code}</span>
+          <span className="num text-[0.72rem] font-bold tracking-[0.12em] text-ink/78">{zone.code}</span>
         </div>
       </td>
       <td className="px-3 py-4">
         <span className="num text-[0.8rem] font-medium text-ink">{zone.name}</span>
       </td>
       <td className="hidden px-3 py-4 lg:table-cell">
-        <span className="tele text-ink/40">{zone.sector}</span>
+        <span className="tele text-ink/62">{zone.sector}</span>
       </td>
       <td className="hidden px-3 py-4 text-right md:table-cell">
-        <span className="num text-[0.74rem] text-ink/65">{p.occupancy.toLocaleString('en-IN')}</span>
-        <span className="num text-[0.68rem] text-ink/35"> / {compact(p.capacity)}</span>
+        <span className="num text-[0.74rem] text-ink/82">{p.occupancy.toLocaleString('en-IN')}</span>
+        <span className="num text-[0.68rem] text-ink/62"> / {compact(p.capacity)}</span>
       </td>
       <td className="w-[22%] px-3 py-4">
         <div className="relative h-2 bg-line">
@@ -154,7 +154,7 @@ function ZoneRow({
         </div>
       </td>
       <td className="px-3 py-4 text-right">
-        <span className="num text-[1rem] font-bold" style={{ color: meta.color }}>
+        <span className="num text-[1rem] font-bold" style={{ color: meta.text }}>
           {p.score.toFixed(0)}
         </span>
       </td>
@@ -162,7 +162,7 @@ function ZoneRow({
         <span
           className={cn(
             'num inline-flex items-center justify-end gap-1 text-[0.72rem]',
-            delta >= 0.5 ? 'text-ember-700' : delta <= -0.5 ? 'text-ink/50' : 'text-ink/30',
+            delta >= 0.5 ? 'text-ember-700' : delta <= -0.5 ? 'text-ink/70' : 'text-ink/62',
           )}
         >
           {delta >= 0.5 && <TrendingUp className="h-3 w-3" strokeWidth={2.4} />}
@@ -171,7 +171,7 @@ function ZoneRow({
         </span>
       </td>
       <td className="hidden py-4 pl-3 pr-6 text-right sm:table-cell">
-        <span className="num text-[0.72rem] text-ink/45">{(load * 100).toFixed(0)}%</span>
+        <span className="num text-[0.72rem] text-ink/62">{(load * 100).toFixed(0)}%</span>
       </td>
     </tr>
   )
@@ -207,7 +207,7 @@ function AlertCard({
         className="mb-5 flex w-full items-start justify-between gap-4 text-left"
       >
         <span>
-          <span className="num block text-[0.72rem] font-bold tracking-[0.14em]" style={{ color: meta.color }}>
+          <span className="num block text-[0.72rem] font-bold tracking-[0.14em]" style={{ color: meta.text }}>
             {zone.code}
           </span>
           <span className="num mt-1 block text-[0.9rem] font-medium text-ink">{zone.name}</span>
@@ -222,7 +222,7 @@ function AlertCard({
             key={i}
             className={cn(
               'relative text-[0.76rem] leading-relaxed',
-              i === iv.chain.length - 1 ? 'font-bold text-ember-700' : 'text-ink/55',
+              i === iv.chain.length - 1 ? 'font-bold text-ember-700' : 'text-ink/74',
             )}
           >
             <span
@@ -235,14 +235,14 @@ function AlertCard({
       </ol>
 
       <div className="mb-6">
-        <div className="tele mb-3 text-ink/40">RELIEF TARGETS</div>
+        <div className="tele mb-3 text-ink/62">RELIEF TARGETS</div>
         <div className="space-y-2.5">
           {iv.targets.map((t) => {
             const tz = ZONE_BY_ID[t.zoneId]
             return (
               <div key={t.zoneId} className="flex items-center gap-3 text-[0.74rem]">
-                <span className="num w-11 shrink-0 font-bold text-ink/55">{tz.code}</span>
-                <span className="truncate text-ink/65">{tz.name}</span>
+                <span className="num w-11 shrink-0 font-bold text-ink/74">{tz.code}</span>
+                <span className="truncate text-ink/82">{tz.name}</span>
                 <span className="relative ml-auto h-1.5 w-14 shrink-0 bg-line">
                   <span
                     className="absolute inset-y-0 left-0 bg-ember-400"
@@ -258,15 +258,15 @@ function AlertCard({
         </div>
       </div>
 
-      <p className="mb-5 border-l-2 border-ember-500 bg-raised px-4 py-3.5 text-[0.76rem] leading-relaxed text-ink/70">
+      <p className="mb-5 border-l-2 border-ember-500 bg-raised px-4 py-3.5 text-[0.76rem] leading-relaxed text-ink/84">
         {iv.attendeeMessage}
       </p>
 
       <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-line py-3.5">
-        <span className="tele text-ink/40">NUDGE</span>
+        <span className="tele text-ink/62">NUDGE</span>
         <span className="num text-[0.82rem] font-bold text-ember-700">{inr(iv.incentive.amountInr)}</span>
-        <span className="text-[0.72rem] text-ink/45">{iv.incentive.window}</span>
-        <span className="tele ml-auto text-ink/35">BUDGET {inr(iv.incentive.budgetInr)}</span>
+        <span className="text-[0.72rem] text-ink/62">{iv.incentive.window}</span>
+        <span className="tele ml-auto text-ink/62">BUDGET {inr(iv.incentive.budgetInr)}</span>
       </div>
 
       <button
@@ -278,7 +278,7 @@ function AlertCard({
         }}
         className={cn(
           'group flex w-full items-center justify-center gap-3 py-3.5 transition-colors',
-          sending ? 'bg-ember-700 text-paper' : 'bg-ember-500 text-paper hover:bg-ember-700',
+          sending ? 'bg-ember-700 text-paper' : 'bg-ember-700 text-paper hover:bg-ember-900',
         )}
       >
         {sending ? (
@@ -333,11 +333,11 @@ export default function WarRoom() {
         <div className={cn(SHELL, 'py-6')}>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
-              <div className="tele mb-2 text-ink/40">OPERATION</div>
+              <div className="tele mb-2 text-ink/62">OPERATION</div>
               <h1 className="display text-[1.55rem] leading-none text-ink">{HOST_CITY.eventName}</h1>
-              <div className="tele mt-3 flex flex-wrap items-center gap-2 text-ink/45">
+              <div className="tele mt-3 flex flex-wrap items-center gap-2 text-ink/62">
                 <span>ON FIELD</span>
-                <span className="text-ink/70">
+                <span className="text-ink/84">
                   {liveEvent ? liveEvent.name : nextEvent ? 'NEXT ' + nextEvent.name : 'NO FIXTURE'}
                 </span>
                 {liveEvent && (
@@ -350,7 +350,7 @@ export default function WarRoom() {
 
             <div className="flex flex-wrap items-end gap-8">
               <div>
-                <div className="tele mb-2 text-ink/40">LOCAL TIME</div>
+                <div className="tele mb-2 text-ink/62">LOCAL TIME</div>
                 <div className="num text-[2.1rem] font-bold leading-none tabular-nums text-ember-700">
                   {wallClock(sim.rounded)}
                 </div>
@@ -360,7 +360,7 @@ export default function WarRoom() {
                 <button
                   type="button"
                   onClick={() => sim.setPlaying(!sim.playing)}
-                  className="grid h-10 w-10 place-items-center border border-ember-500 text-ember-500 transition-colors hover:bg-ember-500 hover:text-paper"
+                  className="grid h-10 w-10 place-items-center border border-ember-700 text-ember-700 transition-colors hover:bg-ember-700 hover:text-paper"
                   aria-label={sim.playing ? 'Pause' : 'Play'}
                 >
                   {sim.playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
@@ -368,7 +368,7 @@ export default function WarRoom() {
                 <button
                   type="button"
                   onClick={sim.reset}
-                  className="grid h-10 w-10 place-items-center border border-line text-ink/50 transition-colors hover:border-ember-500 hover:text-ink"
+                  className="grid h-10 w-10 place-items-center border border-line text-ink/70 transition-colors hover:border-ember-500 hover:text-ink"
                   aria-label="Reset"
                 >
                   <RotateCcw className="h-4 w-4" />
@@ -382,8 +382,8 @@ export default function WarRoom() {
                       className={cn(
                         'tele border px-3 py-2.5 transition-colors',
                         i === sim.speedIndex
-                          ? 'border-ember-500 bg-ember-500 text-paper'
-                          : 'border-line text-ink/45 hover:text-ink',
+                          ? 'border-ember-700 bg-ember-700 text-paper'
+                          : 'border-line text-ink/62 hover:text-ink',
                         i > 0 && '-ml-px',
                       )}
                     >
@@ -420,8 +420,8 @@ export default function WarRoom() {
       <div className="border-b border-line bg-surface">
         <div className={cn(SHELL, 'pb-16 pt-7')}>
           <div className="mb-8 flex items-center gap-3">
-            <span className="tele text-ink/40">SCENARIO</span>
-            <span className="num text-[0.7rem] text-ink/55">T PLUS {sim.rounded} MIN</span>
+            <span className="tele text-ink/62">SCENARIO</span>
+            <span className="num text-[0.7rem] text-ink/74">T PLUS {sim.rounded} MIN</span>
           </div>
           <div className="relative h-px bg-line">
             <div
@@ -450,7 +450,7 @@ export default function WarRoom() {
                   <span
                     className={cn(
                       'tele absolute left-1/2 top-6 w-28 -translate-x-1/2 text-center leading-relaxed transition-colors',
-                      reached ? 'text-ink/65' : 'text-ink/35',
+                      reached ? 'text-ink/88' : 'text-ink/72',
                     )}
                   >
                     {m.label}
@@ -472,7 +472,7 @@ export default function WarRoom() {
                 {(['nominal', 'watch', 'warning', 'critical'] as const).map((b) => (
                   <span key={b} className="flex items-center gap-2">
                     <BandDot band={b} />
-                    <span className="tele text-ink/45">{BANDS[b].label}</span>
+                    <span className="tele text-ink/62">{BANDS[b].label}</span>
                   </span>
                 ))}
               </div>
@@ -509,8 +509,8 @@ export default function WarRoom() {
                     className="flex flex-col items-center gap-4 px-6 py-20 text-center"
                   >
                     <Check className="h-7 w-7 text-ember-400" strokeWidth={1.4} />
-                    <p className="tele text-ink/45">ALL ZONES BELOW WATCH LINE</p>
-                    <p className="font-luxe text-[0.98rem] italic text-ink/40">
+                    <p className="tele text-ink/62">ALL ZONES BELOW WATCH LINE</p>
+                    <p className="font-luxe text-[0.98rem] italic text-ink/62">
                       Nothing to act on. This is what success looks like.
                     </p>
                   </motion.div>
@@ -533,7 +533,7 @@ export default function WarRoom() {
           title={'FORECAST · ' + zone.code + ' ' + zone.name}
           right={
             <div className="flex items-center gap-4">
-              <span className="tele text-ink/40">CONFIDENCE {(forecast.confidence * 100).toFixed(0)}%</span>
+              <span className="tele text-ink/62">CONFIDENCE {(forecast.confidence * 100).toFixed(0)}%</span>
               <BandTag band={pressure.band} />
             </div>
           }
@@ -545,7 +545,7 @@ export default function WarRoom() {
 
             <div className="space-y-8">
               <div>
-                <div className="tele mb-4 text-ink/40">SCORE COMPOSITION</div>
+                <div className="tele mb-4 text-ink/62">SCORE COMPOSITION</div>
                 <div className="space-y-4">
                   {[
                     { k: 'OCCUPANCY', w: 0.5, v: pressure.components.occupancy },
@@ -554,8 +554,8 @@ export default function WarRoom() {
                   ].map((c) => (
                     <div key={c.k}>
                       <div className="mb-2 flex items-baseline justify-between">
-                        <span className="tele text-ink/55">{c.k}</span>
-                        <span className="num text-[0.7rem] text-ink/60">
+                        <span className="tele text-ink/74">{c.k}</span>
+                        <span className="num text-[0.7rem] text-ink/78">
                           {(c.v * 100).toFixed(0)} × {c.w}
                         </span>
                       </div>
@@ -573,23 +573,23 @@ export default function WarRoom() {
 
               <div className="grid grid-cols-2 gap-6 border-t border-line pt-6">
                 <div>
-                  <div className="tele mb-2 text-ink/40">OCCUPANCY</div>
+                  <div className="tele mb-2 text-ink/62">OCCUPANCY</div>
                   <div className="num text-[1.15rem] font-bold text-ink">
                     {pressure.occupancy.toLocaleString('en-IN')}
                   </div>
-                  <div className="num mt-1 text-[0.66rem] text-ink/40">
+                  <div className="num mt-1 text-[0.66rem] text-ink/62">
                     of {pressure.capacity.toLocaleString('en-IN')}
                   </div>
                 </div>
                 <div>
-                  <div className="tele mb-2 text-ink/40">SATURATION</div>
+                  <div className="tele mb-2 text-ink/62">SATURATION</div>
                   <div
                     className="num text-[1.15rem] font-bold"
                     style={{
                       color:
                         forecast.etaToSaturationMin !== null
-                          ? BANDS.critical.color
-                          : BANDS[pressure.band].color,
+                          ? BANDS.critical.text
+                          : BANDS[pressure.band].text,
                     }}
                   >
                     {forecast.etaToSaturationMin !== null
@@ -598,7 +598,7 @@ export default function WarRoom() {
                         ? 'IN BAND'
                         : 'CLEAR'}
                   </div>
-                  <div className="num mt-1 text-[0.66rem] text-ink/40">
+                  <div className="num mt-1 text-[0.66rem] text-ink/62">
                     peak {forecast.projectedPeak.toFixed(0)}%
                   </div>
                 </div>
@@ -607,21 +607,21 @@ export default function WarRoom() {
           </div>
         </Panel>
 
-        <Panel title="ALL ZONES" right={<span className="tele text-ink/40">SORTED BY PRESSURE</span>} padded={false}>
+        <Panel title="ALL ZONES" right={<span className="tele text-ink/62">SORTED BY PRESSURE</span>} padded={false}>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[680px] border-collapse">
               <thead>
                 <tr className="border-b border-line">
-                  <th className="tele py-4 pl-6 pr-3 text-left font-medium text-ink/40">ZONE</th>
-                  <th className="tele px-3 py-4 text-left font-medium text-ink/40">NAME</th>
-                  <th className="tele hidden px-3 py-4 text-left font-medium text-ink/40 lg:table-cell">SECTOR</th>
-                  <th className="tele hidden px-3 py-4 text-right font-medium text-ink/40 md:table-cell">
+                  <th className="tele py-4 pl-6 pr-3 text-left font-medium text-ink/62">ZONE</th>
+                  <th className="tele px-3 py-4 text-left font-medium text-ink/62">NAME</th>
+                  <th className="tele hidden px-3 py-4 text-left font-medium text-ink/62 lg:table-cell">SECTOR</th>
+                  <th className="tele hidden px-3 py-4 text-right font-medium text-ink/62 md:table-cell">
                     OCCUPANCY
                   </th>
-                  <th className="tele px-3 py-4 text-left font-medium text-ink/40">PRESSURE</th>
-                  <th className="tele px-3 py-4 text-right font-medium text-ink/40">SCORE</th>
-                  <th className="tele px-3 py-4 text-right font-medium text-ink/40">Δ15M</th>
-                  <th className="tele hidden py-4 pl-3 pr-6 text-right font-medium text-ink/40 sm:table-cell">
+                  <th className="tele px-3 py-4 text-left font-medium text-ink/62">PRESSURE</th>
+                  <th className="tele px-3 py-4 text-right font-medium text-ink/62">SCORE</th>
+                  <th className="tele px-3 py-4 text-right font-medium text-ink/62">Δ15M</th>
+                  <th className="tele hidden py-4 pl-3 pr-6 text-right font-medium text-ink/62 sm:table-cell">
                     LOAD
                   </th>
                 </tr>
@@ -639,14 +639,14 @@ export default function WarRoom() {
           <Panel
             title="DISPATCH LOG"
             right={
-              <span className="tele text-ink/40">
+              <span className="tele text-ink/62">
                 {sim.dispatched.length} SENT · {compact(sim.divertedTotal)} REROUTED
               </span>
             }
             padded={false}
           >
             {sim.dispatched.length === 0 ? (
-              <p className="px-6 py-16 text-center font-luxe text-[0.98rem] italic text-ink/40">
+              <p className="px-6 py-16 text-center font-luxe text-[0.98rem] italic text-ink/62">
                 No interventions sent yet.
               </p>
             ) : (
@@ -659,21 +659,21 @@ export default function WarRoom() {
                     className="border-b border-line px-6 py-4 last:border-b-0"
                   >
                     <div className="mb-2 flex items-center gap-3">
-                      <Check className="h-3.5 w-3.5 shrink-0 text-ember-500" strokeWidth={3} />
-                      <span className="num text-[0.68rem] text-ink/45">{wallClock(d.createdAt)}</span>
+                      <Check className="h-3.5 w-3.5 shrink-0 text-ember-700" strokeWidth={3} />
+                      <span className="num text-[0.68rem] text-ink/62">{wallClock(d.createdAt)}</span>
                       <span className="num text-[0.74rem] font-bold text-ember-700">
                         {ZONE_BY_ID[d.zoneId].code}
                       </span>
-                      <span className="tele ml-auto text-ink/40">-{d.projectedRelief.toFixed(1)} PTS</span>
+                      <span className="tele ml-auto text-ink/62">-{d.projectedRelief.toFixed(1)} PTS</span>
                     </div>
-                    <p className="text-[0.72rem] leading-relaxed text-ink/55">{d.opsAlert}</p>
+                    <p className="text-[0.72rem] leading-relaxed text-ink/74">{d.opsAlert}</p>
                   </motion.div>
                 ))}
               </div>
             )}
           </Panel>
 
-          <Panel title="TRANSIT LOAD" right={<span className="tele text-ink/40">TOP CORRIDORS</span>} padded={false}>
+          <Panel title="TRANSIT LOAD" right={<span className="tele text-ink/62">TOP CORRIDORS</span>} padded={false}>
             <div>
               {[...sim.snapshot.links]
                 .sort((a, b) => b.load - a.load)
@@ -683,10 +683,10 @@ export default function WarRoom() {
                     key={l.id}
                     className="flex items-center gap-4 border-b border-line px-6 py-3.5 last:border-b-0"
                   >
-                    <span className="num w-24 shrink-0 text-[0.7rem] text-ink/60">
+                    <span className="num w-24 shrink-0 text-[0.7rem] text-ink/78">
                       {ZONE_BY_ID[l.from].code} {'>'} {ZONE_BY_ID[l.to].code}
                     </span>
-                    <span className="tele w-12 shrink-0 text-ink/40">{l.mode}</span>
+                    <span className="tele w-12 shrink-0 text-ink/62">{l.mode}</span>
                     <div className="relative h-2 flex-1 bg-line">
                       <div
                         className="absolute inset-y-0 left-0"
@@ -701,7 +701,7 @@ export default function WarRoom() {
                         }}
                       />
                     </div>
-                    <span className="num w-11 shrink-0 text-right text-[0.72rem] font-bold text-ink/70">
+                    <span className="num w-11 shrink-0 text-right text-[0.72rem] font-bold text-ink/84">
                       {(l.load * 100).toFixed(0)}%
                     </span>
                   </div>

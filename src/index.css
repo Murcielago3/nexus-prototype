@@ -121,10 +121,10 @@
   /* Small uppercase telemetry label, the workhorse of the console */
   .tele {
     font-family: var(--font-tele);
-    font-size: 0.625rem;
-    letter-spacing: 0.16em;
+    font-size: 0.68rem;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .num {
@@ -140,6 +140,13 @@
     /* Heavy condensed faces set very tight by default and the caps end up
        almost touching across a line break. This buys the gap back. */
     line-height: 1.06;
+  }
+
+  /* Role Model and Bodoni Moda are didone class faces: hairline serifs and
+     extreme thick to thin contrast. At regular weight they disintegrate on
+     screen, so the serif never runs lighter than this. */
+  .font-luxe {
+    font-weight: 500;
   }
 
   .panel {
