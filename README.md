@@ -98,3 +98,31 @@ Model is free for personal use only. Drop the licensed files into
 ## Stack
 
 React 19, TypeScript, Vite 8, Tailwind 4, Framer Motion, Lenis, cobe, lucide.
+
+## Guided tour
+
+`src/tour/` holds a 25 step walkthrough aimed at someone who has never heard of
+NEXUS and is about to judge it. It runs across all three pages.
+
+- `steps.ts` is the script and the only file to edit for wording. Each step
+  names a `route`, an optional `target`, and an optional `act` that puts the
+  app into the state the point needs.
+- `TourProvider.tsx` owns position, navigates the router, and drives the
+  simulation through a small `TourControls` surface.
+- `TourOverlay.tsx` draws the dim, the spotlight and the callout.
+
+Steps anchor to `data-tour="..."` attributes on real elements. If you rename or
+move one of those, the step falls back to a centred card rather than breaking,
+so check the anchors after refactoring a page. There is a source level check:
+
+```bash
+node -e "const fs=require('fs');const t=[...fs.readFileSync('src/tour/steps.ts','utf8').matchAll(/target: '([^']+)'/g)].map(m=>m[1]);const all=['src/pages/Overture.tsx','src/pages/WarRoom.tsx','src/pages/SmartGuide.tsx','src/components/Nav.tsx'].map(f=>fs.readFileSync(f,'utf8')).join('');const miss=[...new Set(t)].filter(x=>!all.includes('\"'+x+'\"'));console.log(miss.length?'MISSING: '+miss:'all anchors present')"
+```
+
+Three steps target the War Room alert card, which only exists once the clock
+reaches the critical moment. Those steps seek the clock in `act` first. Do not
+reorder them ahead of the seek.
+
+The tour auto starts once per browser on the first visit to `/`, tracked in
+`localStorage` under `nexus.tour.seen`. The nav button restarts it any time.
+

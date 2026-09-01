@@ -43,7 +43,7 @@ function StatusBar({ time }: { time: string }) {
 function PhonePick({ rec }: { rec: GuideRecommendation }) {
   const load = rec.pressure.occupancy / rec.pressure.capacity
   return (
-    <article className="border border-line bg-paper p-5">
+    <article data-tour="sg-pick" className="border border-line bg-paper p-5">
       <div className="tele mb-3 text-ember-700">BEST MOVE RIGHT NOW</div>
 
       <div className="flex items-start justify-between gap-4">
@@ -239,7 +239,7 @@ export default function SmartGuide() {
         )}
       >
         <div className="mx-auto w-full max-w-[420px]">
-          <div className="overflow-hidden rounded-[2.25rem] border border-line bg-surface shadow-[0_30px_90px_-40px_rgba(74,13,2,0.35)]">
+          <div data-tour="sg-phone" className="overflow-hidden rounded-[2.25rem] border border-line bg-surface shadow-[0_30px_90px_-40px_rgba(74,13,2,0.35)]">
             <StatusBar time={wallClock(sim.rounded)} />
 
             <header className="flex items-center justify-between border-b border-line px-6 pb-4 pt-2">
@@ -414,7 +414,7 @@ export default function SmartGuide() {
       </section>
 
       {/* ───────── how a number becomes a sentence ───────── */}
-      <section className="border-y border-line bg-surface">
+      <section data-tour="sg-chain" className="border-y border-line bg-surface">
         <div className={cn(SHELL, 'py-20')}>
           <MaskText
             as="h2"

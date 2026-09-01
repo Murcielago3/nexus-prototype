@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { Nav } from '@/components/Nav'
 import { SmoothScroll } from '@/components/SmoothScroll'
 import { SimProvider } from '@/hooks/SimProvider'
+import { TourProvider } from '@/tour/TourProvider'
+import { TourOverlay } from '@/tour/TourOverlay'
 
 const Overture = lazy(() => import('@/pages/Overture'))
 const WarRoom = lazy(() => import('@/pages/WarRoom'))
@@ -38,19 +40,23 @@ export default function App() {
   return (
     <BrowserRouter>
       <SimProvider>
-      <ScrollToTop />
-      <SmoothScroll />
-      <Nav />
-      <main className="min-h-screen">
-        <Suspense fallback={<Booting />}>
-          <Routes>
-            <Route path="/" element={<Overture />} />
-            <Route path="/war-room" element={<WarRoom />} />
-            <Route path="/guide" element={<SmartGuide />} />
-            <Route path="*" element={<Overture />} />
-          </Routes>
-        </Suspense>
-      </main>
+        {/* TourProvider drives the sim and the router, so it sits inside both */}
+        <TourProvider>
+          <ScrollToTop />
+          <SmoothScroll />
+          <Nav />
+          <main className="min-h-screen">
+            <Suspense fallback={<Booting />}>
+              <Routes>
+                <Route path="/" element={<Overture />} />
+                <Route path="/war-room" element={<WarRoom />} />
+                <Route path="/guide" element={<SmartGuide />} />
+                <Route path="*" element={<Overture />} />
+              </Routes>
+            </Suspense>
+          </main>
+          <TourOverlay />
+        </TourProvider>
       </SimProvider>
     </BrowserRouter>
   )

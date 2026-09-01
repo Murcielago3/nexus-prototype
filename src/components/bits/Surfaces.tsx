@@ -139,10 +139,13 @@ export function SpotlightCard({
   children,
   className,
   spotlightColor = 'rgba(232, 93, 16, 0.09)',
+  ...rest
 }: {
   children: ReactNode
   className?: string
   spotlightColor?: string
+  /** Lets the guided tour anchor a spotlight to this card. */
+  'data-tour'?: string
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const mx = useMotionValue(-500)
@@ -151,6 +154,7 @@ export function SpotlightCard({
   return (
     <div
       ref={ref}
+      {...rest}
       onMouseMove={(e) => {
         const rect = ref.current?.getBoundingClientRect()
         if (!rect) return

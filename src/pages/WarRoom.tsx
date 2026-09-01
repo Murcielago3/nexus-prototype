@@ -33,15 +33,18 @@ function Panel({
   children,
   className,
   padded = true,
+  tour,
 }: {
   title: string
   right?: React.ReactNode
   children: React.ReactNode
   className?: string
   padded?: boolean
+  /** Anchors a guided tour spotlight to this panel. */
+  tour?: string
 }) {
   return (
-    <section className={cn('panel flex flex-col', className)}>
+    <section data-tour={tour} className={cn('panel flex flex-col', className)}>
       <header className="flex min-h-[3.5rem] shrink-0 flex-wrap items-center justify-between gap-3 border-b border-line px-6 py-4">
         <h2 className="tele text-ember-700">{title}</h2>
         {right}
@@ -216,7 +219,7 @@ function AlertCard({
       </button>
 
       {/* the reasoning trail, never collapsed */}
-      <ol className="mb-6 space-y-2.5 border-l border-line pl-4">
+      <ol data-tour="wr-alert-chain" className="mb-6 space-y-2.5 border-l border-line pl-4">
         {iv.chain.map((c, i) => (
           <li
             key={i}
@@ -234,7 +237,7 @@ function AlertCard({
         ))}
       </ol>
 
-      <div className="mb-6">
+      <div data-tour="wr-alert-targets" className="mb-6">
         <div className="tele mb-3 text-ink/62">RELIEF TARGETS</div>
         <div className="space-y-2.5">
           {iv.targets.map((t) => {
@@ -270,6 +273,7 @@ function AlertCard({
       </div>
 
       <button
+        data-tour="wr-dispatch"
         type="button"
         disabled={sending}
         onClick={() => {
@@ -349,7 +353,7 @@ export default function WarRoom() {
             </div>
 
             <div className="flex flex-wrap items-end gap-8">
-              <div>
+              <div data-tour="wr-clock">
                 <div className="tele mb-2 text-ink/62">LOCAL TIME</div>
                 <div className="num text-[2.1rem] font-bold leading-none tabular-nums text-ember-700">
                   {wallClock(sim.rounded)}
@@ -417,7 +421,7 @@ export default function WarRoom() {
       </header>
 
       {/* ───────── scenario ───────── */}
-      <div className="border-b border-line bg-surface">
+      <div data-tour="wr-scenario" className="border-b border-line bg-surface">
         <div className={cn(SHELL, 'pb-16 pt-7')}>
           <div className="mb-8 flex items-center gap-3">
             <span className="tele text-ink/62">SCENARIO</span>
@@ -466,6 +470,7 @@ export default function WarRoom() {
       <div className={cn(SHELL, 'space-y-8 py-10')}>
         <div className="grid gap-8 xl:grid-cols-[1.55fr_1fr]">
           <Panel
+            tour="wr-plate"
             title="ZONE PRESSURE PLATE"
             right={
               <div className="flex flex-wrap items-center gap-4">
@@ -488,6 +493,7 @@ export default function WarRoom() {
           </Panel>
 
           <Panel
+            tour="wr-queue"
             title="INTERVENTION QUEUE"
             right={
               <span className="tele flex items-center gap-2 text-ember-700">
@@ -530,6 +536,7 @@ export default function WarRoom() {
         </div>
 
         <Panel
+          tour="wr-forecast"
           title={'FORECAST · ' + zone.code + ' ' + zone.name}
           right={
             <div className="flex items-center gap-4">
@@ -544,7 +551,7 @@ export default function WarRoom() {
             </div>
 
             <div className="space-y-8">
-              <div>
+              <div data-tour="wr-composition">
                 <div className="tele mb-4 text-ink/62">SCORE COMPOSITION</div>
                 <div className="space-y-4">
                   {[
@@ -607,7 +614,7 @@ export default function WarRoom() {
           </div>
         </Panel>
 
-        <Panel title="ALL ZONES" right={<span className="tele text-ink/62">SORTED BY PRESSURE</span>} padded={false}>
+        <Panel tour="wr-table" title="ALL ZONES" right={<span className="tele text-ink/62">SORTED BY PRESSURE</span>} padded={false}>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[680px] border-collapse">
               <thead>

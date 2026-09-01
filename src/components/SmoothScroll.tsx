@@ -18,12 +18,38 @@ import { useLocation } from 'react-router-dom'
  * The War Room opts out. An operator scrubbing a dense console wants the
  * scroll position to stop exactly where they let go.
  */
+
+let current: Lenis | null = null
+
+/**
+ * The live instance, or null on routes that opt out. The guided tour needs
+ * this: calling window.scrollTo while Lenis is running gets overwritten on
+ * the next frame, because Lenis reasserts its own target every tick.
+ */
+export function getLenis(): Lenis | null {
+  return current
+}
+
+/** Scrolls an element into view through whichever scroller is in charge. */
+export function tourScrollTo(el: Element, offset = -160) {
+  const lenis = getLenis()
+  if (lenis) {
+    lenis.scrollTo(el as HTMLElement, { offset, duration: 0.9 })
+    return
+  }
+  const top = window.scrollY + el.getBoundingClientRect().top + offset
+  window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' })
+}
+
 export function SmoothScroll() {
   const { pathname } = useLocation()
   const enabled = pathname !== '/war-room'
 
   useEffect(() => {
-    if (!enabled) return
+    if (!enabled) {
+      current = null
+      return
+    }
 
     const lenis = new Lenis({
       duration: 1.1,
@@ -32,8 +58,12 @@ export function SmoothScroll() {
       touchMultiplier: 1.6,
       autoRaf: true,
     })
+    current = lenis
 
-    return () => lenis.destroy()
+    return () => {
+      lenis.destroy()
+      current = null
+    }
   }, [enabled])
 
   return null

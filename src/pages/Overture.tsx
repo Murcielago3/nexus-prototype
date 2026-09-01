@@ -85,7 +85,7 @@ function Hero() {
 
           {/* lines rise in sequence from behind a clipping edge, one block
               each, which carries more weight than characters arriving apart */}
-          <h1 className="display mt-8 text-[clamp(2.6rem,6.6vw,5.4rem)] text-ink">
+          <h1 data-tour="hero-headline" className="display mt-8 text-[clamp(2.6rem,6.6vw,5.4rem)] text-ink">
             <MaskLine delay={0.2}>SEE THE CITY</MaskLine>
             <MaskLine delay={0.32}>BEFORE IT</MaskLine>
             <MaskLine delay={0.44}>
@@ -176,7 +176,7 @@ function StatBar() {
   ]
 
   return (
-    <section className="border-y border-line bg-surface">
+    <section data-tour="statbar" className="border-y border-line bg-surface">
       <div className="mx-auto grid max-w-[1500px] grid-cols-2 divide-line md:grid-cols-4 md:divide-x">
         {stats.map((s) => (
           <div key={s.k} className="border-b border-line px-6 py-9 md:border-b-0">
@@ -200,7 +200,7 @@ function Manifesto() {
         <div className="absolute left-1/2 top-1/2 h-[62vh] w-[62vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ember-100/45 blur-[130px]" />
       </Parallax>
 
-      <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
+      <div data-tour="manifesto" className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
         <ScrollReveal className="mt-10 text-balance font-luxe text-[clamp(1.4rem,3.1vw,2.4rem)] leading-[1.36] text-ink">
           Everyone else builds a dashboard that tells you what already happened. A rear view
           mirror. NEXUS is a steering wheel. It watches pressure build across every hotel,
@@ -260,7 +260,7 @@ function Organs() {
 
         <div className="grid gap-px bg-line md:grid-cols-3">
           {ORGANS.map((o, i) => (
-            <SpotlightCard key={o.no} className="border-0 p-9 sm:p-10">
+            <SpotlightCard key={o.no} data-tour={["organ-pressure","organ-foresight","organ-intervention"][i]} className="border-0 p-9 sm:p-10">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -319,7 +319,7 @@ function Chain() {
           </div>
 
           <TiltCard max={4}>
-            <SpotlightCard className="p-8 sm:p-10">
+            <SpotlightCard data-tour="chain-panel" className="p-8 sm:p-10">
               <div className="mb-9 flex items-center justify-between border-b border-line pb-5">
                 <span className="tele text-ember-700">PREDICTION CHAIN</span>
                 <span className="num text-[0.62rem] tracking-[0.2em] text-ink/62">ALERT #4471</span>

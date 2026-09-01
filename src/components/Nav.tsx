@@ -1,7 +1,9 @@
 import { motion, useScroll, useTransform } from 'motion/react'
+import { Compass } from 'lucide-react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { HOST_CITY } from '@/data/city'
 import { cn } from '@/lib/utils'
+import { useTour } from '@/tour/TourProvider'
 
 const LINKS = [
   { to: '/', label: 'OVERVIEW' },
@@ -26,6 +28,7 @@ export function Mark({ className }: { className?: string }) {
 }
 
 export function Nav() {
+  const tour = useTour()
   const { scrollY } = useScroll()
   const location = useLocation()
   const onLanding = location.pathname === '/'
@@ -79,7 +82,17 @@ export function Nav() {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-5">
+        <div className="ml-auto flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => tour.start(0)}
+            data-tour="nav-tour"
+            className="group flex items-center gap-2 border border-ember-700 px-3.5 py-1.5 text-ember-700 transition-colors hover:bg-ember-700 hover:text-paper"
+          >
+            <Compass className="h-3 w-3 transition-transform group-hover:rotate-45" strokeWidth={2.4} />
+            <span className="tele font-bold">TAKE THE TOUR</span>
+          </button>
+
           <span className="tele hidden text-ink/62 lg:inline">
             {HOST_CITY.name} · {HOST_CITY.country}
           </span>
