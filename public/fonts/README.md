@@ -33,9 +33,13 @@ public/fonts/RoleModel-Oblique.woff2   <- picked up as the italic
 public/fonts/RoleModel-Oblique.otf
 ```
 
-**Until then** the serif stack falls through to **Bodoni Moda** (Google Fonts),
-a high contrast modern serif in the same register: the same fashion and luxury
-feel, and a variable optical size axis so it does not go spindly at small sizes.
+**Until then** the serif stack falls through to **Playfair Display** (Google
+Fonts). It holds the same luxury register with far less stroke contrast and a
+noticeably larger x-height than a didone, so it stays readable at text sizes.
+
+Bodoni Moda was used here first and was replaced for exactly that reason: a
+didone is a headline face, and no amount of size tuning makes its hairlines
+survive at 16px on screen.
 
 Note that Role Model ships an *oblique*, not a true italic. The `@font-face`
 above maps it to `font-style: italic` so every existing italic in the app picks
@@ -46,5 +50,5 @@ it up without markup changes.
 | Role | Family | Source |
 |---|---|---|
 | Display / primary | Milker → Anton | local drop-in / Google Fonts |
-| Luxury serif | Role Model → Bodoni Moda | local drop-in / Google Fonts |
+| Luxury serif | Role Model → Playfair Display | local drop-in / Google Fonts |
 | Telemetry / numerals | JetBrains Mono | Google Fonts |

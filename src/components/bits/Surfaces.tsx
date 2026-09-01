@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 
 export function Aurora({ className, intensity = 1 }: { className?: string; intensity?: number }) {
   return (
-    <div className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)} aria-hidden>
+    <div data-decorative className={cn('pointer-events-none absolute inset-0 overflow-hidden', className)} aria-hidden>
       <style>
         {'@keyframes aur-a{0%,100%{transform:translate3d(-6%,-3%,0) scale(1)}' +
           '50%{transform:translate3d(8%,5%,0) scale(1.2)}}' +
@@ -126,7 +126,14 @@ export function Particles({
     }
   }, [count, speed, connect])
 
-  return <canvas ref={ref} className={cn('pointer-events-none absolute inset-0 h-full w-full', className)} aria-hidden />
+  return (
+    <canvas
+      ref={ref}
+      data-decorative
+      className={cn('pointer-events-none absolute inset-0 h-full w-full', className)}
+      aria-hidden
+    />
+  )
 }
 
 /* ============================================================

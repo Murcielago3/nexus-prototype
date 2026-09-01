@@ -57,8 +57,21 @@ export function SmoothScroll() {
       smoothWheel: true,
       touchMultiplier: 1.6,
       autoRaf: true,
+      // Lenis defaults this to true, and when the OS reports reduced motion it
+      // sets lerp to 1, which is no smoothing at all. That is why removing our
+      // own reduced-motion guard changed nothing: this one was still firing.
+      // Turned off deliberately, because smooth scrolling is a requested part
+      // of this build rather than decoration.
+      respectReducedMotion: false,
     })
     current = lenis
+
+    // Lenis only publishes its version globally, not the instance, which makes
+    // "is smoothing actually on?" impossible to answer from the console.
+    // Dev only, so nothing extra ships.
+    if (import.meta.env.DEV) {
+      ;(window as unknown as { __lenis?: Lenis }).__lenis = lenis
+    }
 
     return () => {
       lenis.destroy()

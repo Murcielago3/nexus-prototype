@@ -67,10 +67,10 @@ calm state and the bright oranges are alarm.
 | Role | Family |
 |---|---|
 | Display | Milker, falling back to Anton |
-| Luxury serif | Role Model, falling back to Bodoni Moda |
+| Luxury serif | Role Model, falling back to Playfair Display |
 | Telemetry and numerals | JetBrains Mono |
 
-Role Model and Bodoni Moda both carry a healthy x-height, so the serif sizes
+Role Model and Playfair Display both carry a healthy x-height, so the serif sizes
 here are ordinary numbers. They were much larger while the serif was Cormorant,
 which sets very small for its declared size. If the serif is ever swapped again,
 re-check the scale rather than assuming it carries over.

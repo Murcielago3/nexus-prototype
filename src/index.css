@@ -36,7 +36,7 @@
   --color-critical: #a61304;
 
   --font-display: "Milker", "Anton", "Arial Black", system-ui, sans-serif;
-  --font-luxe: "Role Model", "Bodoni Moda", "Didot", "Times New Roman", serif;
+  --font-luxe: "Role Model", "Playfair Display", "Georgia", serif;
   --font-tele: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
 }
 
@@ -49,8 +49,13 @@
    up automatically. See public/fonts/README.md.
 
    Until then the stacks fall through to Anton, a heavy condensed grotesque,
-   and Bodoni Moda, a high contrast modern serif in the same register as
-   Role Model. Both are chosen so the layout reads correctly either way.
+   and Playfair Display.
+
+   Playfair replaced Bodoni Moda here. Bodoni is a didone: hairline serifs and
+   extreme stroke contrast, built for headlines and genuinely hard to read
+   below about 20px no matter what size you set it at. Playfair keeps the same
+   luxury register with far less contrast and a much larger x-height, so it
+   survives at text sizes.
    ──────────────────────────────────────────────────────────────── */
 
 @font-face {
@@ -142,9 +147,8 @@
     line-height: 1.06;
   }
 
-  /* Role Model and Bodoni Moda are didone class faces: hairline serifs and
-     extreme thick to thin contrast. At regular weight they disintegrate on
-     screen, so the serif never runs lighter than this. */
+  /* The serif still carries more weight than its default, which keeps the
+     thin strokes present on a light ground. */
   .font-luxe {
     font-weight: 500;
   }
@@ -183,11 +187,13 @@
   50%, 100% { opacity: 0.2; }
 }
 
+/* Scoped rather than blanket. The old rule killed every animation on the site
+   including the guided tour's own highlights, which left the walkthrough
+   looking broken for anyone with OS animations turned off. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  [data-decorative],
+  [data-decorative] * {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
   }
 }

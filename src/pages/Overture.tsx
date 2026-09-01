@@ -48,7 +48,7 @@ function SectionHead({ title, lede }: { title: string; lede?: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.9, delay: 0.28, ease: [0.22, 1, 0.28, 1] }}
-          className="mt-7 max-w-2xl text-pretty font-luxe text-[1.22rem] leading-relaxed text-ink/80"
+          className="mt-7 max-w-2xl text-pretty font-luxe text-[1.4rem] leading-relaxed text-ink/80"
         >
           {lede}
         </motion.p>
@@ -97,7 +97,7 @@ function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 1.0, ease: [0.22, 1, 0.28, 1] }}
-            className="mt-9 max-w-lg text-pretty font-luxe text-[1.08rem] italic leading-snug text-ink/86"
+            className="mt-9 max-w-lg text-pretty font-luxe text-[1.24rem] italic leading-snug text-ink/86"
           >
             From reactive firefighting to proactive orchestration.
           </motion.p>
@@ -201,7 +201,7 @@ function Manifesto() {
       </Parallax>
 
       <div data-tour="manifesto" className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <ScrollReveal className="mt-10 text-balance font-luxe text-[clamp(1.4rem,3.1vw,2.4rem)] leading-[1.36] text-ink">
+        <ScrollReveal className="mt-10 text-balance font-luxe text-[clamp(1.62rem,3.6vw,2.8rem)] leading-[1.36] text-ink">
           Everyone else builds a dashboard that tells you what already happened. A rear view
           mirror. NEXUS is a steering wheel. It watches pressure build across every hotel,
           every platform, every gate, and it names the failure that is still forty seven
@@ -273,7 +273,7 @@ function Organs() {
                 </div>
 
                 <h3 className="display text-[1.7rem] text-ink">{o.name}</h3>
-                <p className="mt-2 font-luxe text-[0.98rem] italic text-ember-700">{o.sub}</p>
+                <p className="mt-2 font-luxe text-[1.14rem] italic text-ember-700">{o.sub}</p>
 
                 <p className="mt-6 text-[0.86rem] leading-relaxed text-ink/76">{o.body}</p>
 
@@ -313,7 +313,7 @@ function Chain() {
               title="SHOW THE REASONING, NOT THE VERDICT."
               lede="A red zone tells an operator nothing they can act on. Every NEXUS alert carries the full chain that produced it, so the person on shift can agree with it, override it, or argue with it."
             />
-            <p className="max-w-xl font-luxe text-[1.08rem] italic leading-relaxed text-ink/62">
+            <p className="max-w-xl font-luxe text-[1.24rem] italic leading-relaxed text-ink/62">
               This is the difference between a model you trust at 2am and one you mute.
             </p>
           </div>
@@ -348,7 +348,7 @@ function Chain() {
                       <div className="tele mb-1.5 text-ink/62">{c.k}</div>
                       <div
                         className={cn(
-                          'font-luxe text-[1.05rem] leading-snug',
+                          'font-luxe text-[1.2rem] leading-snug',
                           i === CHAIN.length - 1 ? 'text-ember-700' : 'text-ink/88',
                         )}
                       >
@@ -502,7 +502,7 @@ function Timeline() {
               <div className="display text-[2.5rem] text-ember-700">
                 <CountUp to={s.v} suffix={s.suffix} />
               </div>
-              <div className="mt-2 font-luxe text-[0.96rem] italic text-ink/62">{s.sub}</div>
+              <div className="mt-2 font-luxe text-[1.12rem] italic text-ink/62">{s.sub}</div>
             </div>
           ))}
         </div>
@@ -524,7 +524,7 @@ function Closer() {
             className="display block text-[clamp(2rem,5.4vw,4.2rem)] text-ink"
           />
         </h2>
-        <p className="mx-auto mt-8 max-w-xl font-luxe text-[1.22rem] italic leading-relaxed text-ink/76">
+        <p className="mx-auto mt-8 max-w-xl font-luxe text-[1.4rem] italic leading-relaxed text-ink/76">
           NEXUS is simply the first thing in the room that listens to all of it at once.
         </p>
         <div className="mt-12 flex justify-center">
