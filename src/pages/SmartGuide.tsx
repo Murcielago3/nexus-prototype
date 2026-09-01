@@ -13,7 +13,7 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Mark } from '@/components/Nav'
-import { ReticleCard } from '@/components/bits/Surfaces'
+import { PressureCard } from '@/components/bits/Surfaces'
 import { CountUp, MaskText } from '@/components/bits/Text'
 import { useSim } from '@/hooks/SimProvider'
 import { ZONE_BY_ID, wallClock } from '@/data/city'
@@ -133,7 +133,8 @@ function OptionCard({ rec, rank }: { rec: GuideRecommendation; rank: number }) {
       viewport={{ once: true, amount: 0.25 }}
       transition={{ duration: 0.75, delay: rank * 0.08, ease: [0.22, 1, 0.28, 1] }}
     >
-    <ReticleCard className="flex h-full flex-col p-7">
+    {/* fills to this zone's actual live pressure, not a decorative number */}
+    <PressureCard score={rec.pressure.score} className="flex h-full flex-col p-7">
       <div className="mb-5 flex items-center justify-between">
         <span className="tele text-ink/62">{rank === 0 ? 'TOP PICK' : 'OPTION ' + (rank + 1)}</span>
         <span
@@ -183,7 +184,7 @@ function OptionCard({ rec, rank }: { rec: GuideRecommendation; rank: number }) {
           </span>
         )}
       </div>
-    </ReticleCard>
+    </PressureCard>
     </motion.div>
   )
 }

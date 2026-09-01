@@ -1,6 +1,5 @@
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react'
-import type { Variants } from 'motion/react'
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 /* ============================================================
@@ -138,104 +137,158 @@ export function Particles({
 }
 
 /* ============================================================
-   ReticleCard
-   Hover reads as a targeting system acquiring a zone, which is
-   what the product actually does. Four hairlines trace the
-   perimeter clockwise, corner ticks snap inward, and a single
-   scan line sweeps the card once.
+   PressureCard
+   The hover state runs the product's own mechanic on the card.
 
-   This replaced a cursor tracked radial gradient. That effect is
-   on roughly every site shipped in the last two years and it said
-   nothing about NEXUS.
+   A fill rises from the bottom the way occupancy fills a zone on
+   the pressure plate, crossing the 70 / 85 / 95 threshold rules
+   drawn across the card. The readout counts up with it and the
+   accent steps bands as it passes each line, so hovering a card
+   demonstrates what a pressure score is without a word of
+   explanation. Leaving drains it back down.
 
-   The perimeter is four scaled divs rather than an SVG rect with
-   pathLength, which is not reliably supported on rect across
-   browsers. Transforms are, and they composite on the GPU.
+   Two earlier attempts here were a cursor tracked radial gradient
+   and a border trace with corner ticks. Both were generic motion
+   borrowed from other sites. This one is only possible because of
+   what NEXUS is, which is the point.
    ============================================================ */
 
-/** Tuple, not number[], or motion reads it as a keyframe list. */
-const EASE = [0.22, 1, 0.28, 1] as const
+const BAND_STOPS: { min: number; color: string; label: string }[] = [
+  { min: 95, color: '#a61304', label: 'CRITICAL' },
+  { min: 85, color: '#e85d10', label: 'WARNING' },
+  { min: 70, color: '#f9843f', label: 'WATCH' },
+  { min: 0, color: '#4a0d02', label: 'NOMINAL' },
+]
 
-const TRACE: Variants = {
-  rest: { scaleX: 0, scaleY: 0 },
-  hover: (i: number) => ({
-    scaleX: 1,
-    scaleY: 1,
-    transition: { duration: 0.28, delay: i * 0.09, ease: EASE },
-  }),
+function stopFor(v: number) {
+  return BAND_STOPS.find((b) => v >= b.min) ?? BAND_STOPS[BAND_STOPS.length - 1]
 }
 
-const TICK: Variants = {
-  rest: { opacity: 0, scale: 0.5 },
-  hover: (i: number) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.3, delay: 0.18 + i * 0.05, ease: EASE },
-  }),
-}
-
-export function ReticleCard({
+export function PressureCard({
   children,
   className,
+  score = 78,
   ...rest
 }: {
   children: ReactNode
   className?: string
-  /** Lets the guided tour anchor a spotlight to this card. */
+  /** Where the fill settles on hover. Real zone scores where we have them. */
+  score?: number
   'data-tour'?: string
 }) {
+  const [value, setValue] = useState(0)
+  const target = useRef(0)
+  const raf = useRef(0)
+
+  const run = useCallback(() => {
+    cancelAnimationFrame(raf.current)
+    const from = value
+    const to = target.current
+    const dist = Math.abs(to - from)
+    if (dist < 0.5) {
+      setValue(to)
+      return
+    }
+    // filling is slower than draining, the same asymmetry a real zone has
+    const dur = (to > from ? 780 : 420) * (dist / 100) + 140
+    const start = performance.now()
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / dur, 1)
+      const eased = 1 - Math.pow(1 - t, 3)
+      setValue(from + (to - from) * eased)
+      if (t < 1) raf.current = requestAnimationFrame(tick)
+    }
+    raf.current = requestAnimationFrame(tick)
+  }, [value])
+
+  useEffect(() => () => cancelAnimationFrame(raf.current), [])
+
+  const stop = stopFor(value)
+  const lit = value > 1
+
   return (
-    <motion.div
+    <div
       {...rest}
-      initial="rest"
-      whileHover="hover"
-      animate="rest"
-      whileFocus="hover"
-      variants={{ rest: { y: 0 }, hover: { y: -3 } }}
-      transition={{ duration: 0.35, ease: EASE }}
+      onMouseEnter={() => {
+        target.current = score
+        run()
+      }}
+      onMouseLeave={() => {
+        target.current = 0
+        run()
+      }}
       className={cn('panel group relative overflow-hidden', className)}
+      style={{
+        borderColor: lit ? stop.color : undefined,
+        transition: 'border-color 240ms linear',
+      }}
     >
-      {/* perimeter, drawn clockwise from the top left */}
-      <motion.span custom={0} variants={TRACE} className="pointer-events-none absolute left-0 top-0 h-px w-full origin-left bg-ember-500" />
-      <motion.span custom={1} variants={TRACE} className="pointer-events-none absolute right-0 top-0 h-full w-px origin-top bg-ember-500" />
-      <motion.span custom={2} variants={TRACE} className="pointer-events-none absolute bottom-0 right-0 h-px w-full origin-right bg-ember-500" />
-      <motion.span custom={3} variants={TRACE} className="pointer-events-none absolute bottom-0 left-0 h-full w-px origin-bottom bg-ember-500" />
-
-      {/* corner ticks, the same reticle the console and the tour use */}
-      {[
-        { i: 0, cls: 'left-1.5 top-1.5 border-l border-t' },
-        { i: 1, cls: 'right-1.5 top-1.5 border-r border-t' },
-        { i: 2, cls: 'right-1.5 bottom-1.5 border-b border-r' },
-        { i: 3, cls: 'bottom-1.5 left-1.5 border-b border-l' },
-      ].map((c) => (
-        <motion.span
-          key={c.i}
-          custom={c.i}
-          variants={TICK}
-          className={cn('pointer-events-none absolute h-2.5 w-2.5 border-ember-500', c.cls)}
-        />
-      ))}
-
-      {/* one pass of the scan line */}
-      <motion.span
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-16"
+      {/* the fill, kept faint so the copy over it stays readable */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0"
         style={{
-          background:
-            'linear-gradient(180deg, transparent, color-mix(in oklab, var(--color-ember-500) 12%, transparent), transparent)',
+          height: value + '%',
+          background: `linear-gradient(180deg,
+            color-mix(in oklab, ${stop.color} 20%, transparent),
+            color-mix(in oklab, ${stop.color} 9%, transparent))`,
         }}
-        variants={{
-          rest: { opacity: 0, y: '-100%' },
-          hover: {
-            opacity: [0, 1, 1, 0],
-            y: ['-100%', '0%', '620%', '760%'],
-            transition: { duration: 1.05, times: [0, 0.12, 0.86, 1], ease: 'linear' },
-          },
+      />
+      {/* its surface line */}
+      <div
+        className="pointer-events-none absolute inset-x-0"
+        style={{
+          bottom: value + '%',
+          height: 1,
+          background: stop.color,
+          opacity: lit ? 0.85 : 0,
         }}
       />
 
-      <div className="relative">{children}</div>
-    </motion.div>
+      {/* the three thresholds, measured from the bottom like the plate */}
+      {[70, 85, 95].map((t) => (
+        <div
+          key={t}
+          className="pointer-events-none absolute inset-x-0 flex items-center gap-2 px-4"
+          style={{
+            bottom: t + '%',
+            height: 1,
+            opacity: lit ? 0.55 : 0,
+            transition: 'opacity 260ms linear',
+          }}
+        >
+          <span
+            className="num text-[0.55rem] tracking-[0.14em]"
+            style={{ color: stopFor(t).color }}
+          >
+            {t}
+          </span>
+          <span className="h-px flex-1" style={{ background: stopFor(t).color, opacity: 0.45 }} />
+        </div>
+      ))}
+
+      {/* The readout rides the fill line rather than sitting in a corner.
+          A fixed corner collided with content the cards already put there,
+          and a marker at the water line reads like a gauge anyway. The chip
+          carries its own ground so it stays legible over the copy. */}
+      <div
+        className="pointer-events-none absolute right-3 z-20 flex items-center gap-2 border bg-surface px-2.5 py-1"
+        style={{
+          bottom: `calc(${value}% - 0.85rem)`,
+          borderColor: stop.color,
+          opacity: lit ? 1 : 0,
+          transition: 'opacity 200ms linear',
+        }}
+      >
+        <span className="num text-[0.95rem] font-bold leading-none" style={{ color: stop.color }}>
+          {Math.round(value)}
+        </span>
+        <span className="tele leading-none" style={{ color: stop.color }}>
+          {stop.label}
+        </span>
+      </div>
+
+      <div className="relative z-10">{children}</div>
+    </div>
   )
 }
 

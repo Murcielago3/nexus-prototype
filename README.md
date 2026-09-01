@@ -128,15 +128,18 @@ The tour auto starts once per browser on the first visit to `/`, tracked in
 
 ## Card hover
 
-`ReticleCard` in `src/components/bits/Surfaces.tsx` is the hover treatment for
-every marketing and option card. Four hairlines trace the perimeter clockwise,
-corner ticks snap in, and one scan line sweeps the card.
+`PressureCard` in `src/components/bits/Surfaces.tsx`. Hovering a card runs the
+product's own mechanic on it: a fill rises from the bottom the way occupancy
+fills a zone on the pressure plate, crossing the 70 / 85 / 95 threshold rules
+drawn across the card, while a readout rides the fill line counting up and
+stepping bands. Leaving drains it, faster than it filled.
 
-It replaced a cursor tracked radial gradient, which looks like every other site
-shipped recently and said nothing about what this product does. The reticle
-motif is reused from the pressure plate and the guided tour, so hover reads as
-the system acquiring a zone.
+The point is that it teaches. Hover the three engine cards left to right and
+they settle at 74, 88 and 96, so you watch the scale walk through watch,
+warning and critical without reading a word. On the Smart Guide the cards fill
+to their zone's real live score, not a decorative number.
 
-The perimeter is four scaled divs rather than an SVG `rect` with `pathLength`.
-`pathLength` on `rect` is not reliably supported, transforms are, and they
-composite on the GPU.
+Two earlier versions of this were thrown away: a cursor tracked radial gradient
+and a border trace with corner ticks and a scan line. Both were generic motion
+borrowed from other sites. If this ever gets replaced, the bar is that the
+effect should only be possible because of what NEXUS is.
