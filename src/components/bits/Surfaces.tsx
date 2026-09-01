@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react'
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 /* ============================================================
@@ -137,157 +137,47 @@ export function Particles({
 }
 
 /* ============================================================
-   PressureCard
-   The hover state runs the product's own mechanic on the card.
+   DrawCard
+   Hover draws the border from two opposite corners at once.
 
-   A fill rises from the bottom the way occupancy fills a zone on
-   the pressure plate, crossing the 70 / 85 / 95 threshold rules
-   drawn across the card. The readout counts up with it and the
-   accent steps bands as it passes each line, so hovering a card
-   demonstrates what a pressure score is without a word of
-   explanation. Leaving drains it back down.
+   Top left sends one stroke right along the top and another down
+   the left. Bottom right sends one left along the bottom and one
+   up the right. They meet at top right and bottom left.
 
-   Two earlier attempts here were a cursor tracked radial gradient
-   and a border trace with corner ticks. Both were generic motion
-   borrowed from other sites. This one is only possible because of
-   what NEXUS is, which is the point.
+   Pure CSS transforms with group-hover, no JS and no animation
+   frame loop, so it still runs where requestAnimationFrame is
+   throttled and it composites on the GPU.
    ============================================================ */
 
-const BAND_STOPS: { min: number; color: string; label: string }[] = [
-  { min: 95, color: '#a61304', label: 'CRITICAL' },
-  { min: 85, color: '#e85d10', label: 'WARNING' },
-  { min: 70, color: '#f9843f', label: 'WATCH' },
-  { min: 0, color: '#4a0d02', label: 'NOMINAL' },
-]
+const EDGE_BASE =
+  'pointer-events-none absolute bg-ember-500 transition-transform duration-[420ms] ease-out'
 
-function stopFor(v: number) {
-  return BAND_STOPS.find((b) => v >= b.min) ?? BAND_STOPS[BAND_STOPS.length - 1]
-}
-
-export function PressureCard({
+export function DrawCard({
   children,
   className,
-  score = 78,
   ...rest
 }: {
   children: ReactNode
   className?: string
-  /** Where the fill settles on hover. Real zone scores where we have them. */
-  score?: number
   'data-tour'?: string
 }) {
-  const [value, setValue] = useState(0)
-  const target = useRef(0)
-  const raf = useRef(0)
-
-  const run = useCallback(() => {
-    cancelAnimationFrame(raf.current)
-    const from = value
-    const to = target.current
-    const dist = Math.abs(to - from)
-    if (dist < 0.5) {
-      setValue(to)
-      return
-    }
-    // filling is slower than draining, the same asymmetry a real zone has
-    const dur = (to > from ? 780 : 420) * (dist / 100) + 140
-    const start = performance.now()
-    const tick = (now: number) => {
-      const t = Math.min((now - start) / dur, 1)
-      const eased = 1 - Math.pow(1 - t, 3)
-      setValue(from + (to - from) * eased)
-      if (t < 1) raf.current = requestAnimationFrame(tick)
-    }
-    raf.current = requestAnimationFrame(tick)
-  }, [value])
-
-  useEffect(() => () => cancelAnimationFrame(raf.current), [])
-
-  const stop = stopFor(value)
-  const lit = value > 1
-
   return (
-    <div
-      {...rest}
-      onMouseEnter={() => {
-        target.current = score
-        run()
-      }}
-      onMouseLeave={() => {
-        target.current = 0
-        run()
-      }}
-      className={cn('panel group relative overflow-hidden', className)}
-      style={{
-        borderColor: lit ? stop.color : undefined,
-        transition: 'border-color 240ms linear',
-      }}
-    >
-      {/* the fill, kept faint so the copy over it stays readable */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0"
-        style={{
-          height: value + '%',
-          background: `linear-gradient(180deg,
-            color-mix(in oklab, ${stop.color} 20%, transparent),
-            color-mix(in oklab, ${stop.color} 9%, transparent))`,
-        }}
-      />
-      {/* its surface line */}
-      <div
-        className="pointer-events-none absolute inset-x-0"
-        style={{
-          bottom: value + '%',
-          height: 1,
-          background: stop.color,
-          opacity: lit ? 0.85 : 0,
-        }}
-      />
+    <div {...rest} className={cn('panel group relative', className)}>
+      {/* Offset by a pixel and oversized by two so the strokes land on the
+          panel's own border rather than just inside it, corners included.
+          Absolute positioning resolves against the padding box, so inset-0
+          would leave the grey border showing as a second line. */}
 
-      {/* the three thresholds, measured from the bottom like the plate */}
-      {[70, 85, 95].map((t) => (
-        <div
-          key={t}
-          className="pointer-events-none absolute inset-x-0 flex items-center gap-2 px-4"
-          style={{
-            bottom: t + '%',
-            height: 1,
-            opacity: lit ? 0.55 : 0,
-            transition: 'opacity 260ms linear',
-          }}
-        >
-          <span
-            className="num text-[0.55rem] tracking-[0.14em]"
-            style={{ color: stopFor(t).color }}
-          >
-            {t}
-          </span>
-          <span className="h-px flex-1" style={{ background: stopFor(t).color, opacity: 0.45 }} />
-        </div>
-      ))}
+      {/* from the top left, rightwards along the top, meeting at top right */}
+      <span className={cn(EDGE_BASE, '-left-px -top-px h-px w-[calc(100%+2px)] origin-left scale-x-0 group-hover:scale-x-100')} />
+      {/* from the top left, downwards along the left, meeting at bottom left */}
+      <span className={cn(EDGE_BASE, '-left-px -top-px h-[calc(100%+2px)] w-px origin-top scale-y-0 group-hover:scale-y-100')} />
+      {/* from the bottom right, leftwards along the bottom, meeting at bottom left */}
+      <span className={cn(EDGE_BASE, '-bottom-px -right-px h-px w-[calc(100%+2px)] origin-right scale-x-0 group-hover:scale-x-100')} />
+      {/* from the bottom right, upwards along the right, meeting at top right */}
+      <span className={cn(EDGE_BASE, '-bottom-px -right-px h-[calc(100%+2px)] w-px origin-bottom scale-y-0 group-hover:scale-y-100')} />
 
-      {/* The readout rides the fill line rather than sitting in a corner.
-          A fixed corner collided with content the cards already put there,
-          and a marker at the water line reads like a gauge anyway. The chip
-          carries its own ground so it stays legible over the copy. */}
-      <div
-        className="pointer-events-none absolute right-3 z-20 flex items-center gap-2 border bg-surface px-2.5 py-1"
-        style={{
-          bottom: `calc(${value}% - 0.85rem)`,
-          borderColor: stop.color,
-          opacity: lit ? 1 : 0,
-          transition: 'opacity 200ms linear',
-        }}
-      >
-        <span className="num text-[0.95rem] font-bold leading-none" style={{ color: stop.color }}>
-          {Math.round(value)}
-        </span>
-        <span className="tele leading-none" style={{ color: stop.color }}>
-          {stop.label}
-        </span>
-      </div>
-
-      <div className="relative z-10">{children}</div>
+      <div className="relative">{children}</div>
     </div>
   )
 }

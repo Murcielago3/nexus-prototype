@@ -128,18 +128,16 @@ The tour auto starts once per browser on the first visit to `/`, tracked in
 
 ## Card hover
 
-`PressureCard` in `src/components/bits/Surfaces.tsx`. Hovering a card runs the
-product's own mechanic on it: a fill rises from the bottom the way occupancy
-fills a zone on the pressure plate, crossing the 70 / 85 / 95 threshold rules
-drawn across the card, while a readout rides the fill line counting up and
-stepping bands. Leaving drains it, faster than it filled.
+`DrawCard` in `src/components/bits/Surfaces.tsx`. Hover draws the border from
+two opposite corners at once: top left sends a stroke right along the top and
+another down the left, bottom right sends one left along the bottom and one up
+the right, and they meet at top right and bottom left.
 
-The point is that it teaches. Hover the three engine cards left to right and
-they settle at 74, 88 and 96, so you watch the scale walk through watch,
-warning and critical without reading a word. On the Smart Guide the cards fill
-to their zone's real live score, not a decorative number.
+Four spans, each offset a pixel and oversized by two, so the strokes land on
+the panel's own border including the corners. Absolute positioning resolves
+against the padding box, so `inset-0` would leave the grey border showing as a
+second line underneath.
 
-Two earlier versions of this were thrown away: a cursor tracked radial gradient
-and a border trace with corner ticks and a scan line. Both were generic motion
-borrowed from other sites. If this ever gets replaced, the bar is that the
-effect should only be possible because of what NEXUS is.
+Pure CSS transforms with `group-hover`. No JS and no animation frame loop,
+which means it still runs where requestAnimationFrame is throttled, and it
+composites on the GPU.
