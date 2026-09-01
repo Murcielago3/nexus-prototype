@@ -11,7 +11,7 @@ import {
   ScrollReveal,
   ShinyText,
 } from '@/components/bits/Text'
-import { Aurora, Magnet, Parallax, SpotlightCard, TiltCard } from '@/components/bits/Surfaces'
+import { Aurora, Magnet, Parallax, ReticleCard, TiltCard } from '@/components/bits/Surfaces'
 import { EVENTS, HOST_CITY, ZONES } from '@/data/city'
 import { SCENARIO_MARKS } from '@/data/mock'
 import { cn } from '@/lib/utils'
@@ -260,7 +260,7 @@ function Organs() {
 
         <div className="grid gap-px bg-line md:grid-cols-3">
           {ORGANS.map((o, i) => (
-            <SpotlightCard key={o.no} data-tour={["organ-pressure","organ-foresight","organ-intervention"][i]} className="border-0 p-9 sm:p-10">
+            <ReticleCard key={o.no} data-tour={["organ-pressure","organ-foresight","organ-intervention"][i]} className="border-0 p-9 sm:p-10">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -285,7 +285,7 @@ function Organs() {
                   ))}
                 </div>
               </motion.div>
-            </SpotlightCard>
+            </ReticleCard>
           ))}
         </div>
       </div>
@@ -319,7 +319,7 @@ function Chain() {
           </div>
 
           <TiltCard max={4}>
-            <SpotlightCard data-tour="chain-panel" className="p-8 sm:p-10">
+            <ReticleCard data-tour="chain-panel" className="p-8 sm:p-10">
               <div className="mb-9 flex items-center justify-between border-b border-line pb-5">
                 <span className="tele text-ember-700">PREDICTION CHAIN</span>
                 <span className="num text-[0.62rem] tracking-[0.2em] text-ink/62">ALERT #4471</span>
@@ -367,7 +367,7 @@ function Chain() {
                 <ShieldAlert className="h-4 w-4 text-ember-500" strokeWidth={1.5} />
                 <span className="tele text-ink/66">INTERVENTION WINDOW OPEN</span>
               </div>
-            </SpotlightCard>
+            </ReticleCard>
           </TiltCard>
         </div>
       </div>
@@ -410,7 +410,7 @@ function Interfaces() {
         <div className="grid gap-px bg-line lg:grid-cols-2">
           {faces.map((f, i) => (
             <Link key={f.to} to={f.to} className="group block">
-              <SpotlightCard className="h-full border-0 p-9 sm:p-12">
+              <ReticleCard className="h-full border-0 p-9 sm:p-12">
                 <motion.div
                   initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -437,7 +437,7 @@ function Interfaces() {
                     <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1.5" />
                   </div>
                 </motion.div>
-              </SpotlightCard>
+              </ReticleCard>
             </Link>
           ))}
         </div>

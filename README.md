@@ -126,3 +126,17 @@ reorder them ahead of the seek.
 The tour auto starts once per browser on the first visit to `/`, tracked in
 `localStorage` under `nexus.tour.seen`. The nav button restarts it any time.
 
+## Card hover
+
+`ReticleCard` in `src/components/bits/Surfaces.tsx` is the hover treatment for
+every marketing and option card. Four hairlines trace the perimeter clockwise,
+corner ticks snap in, and one scan line sweeps the card.
+
+It replaced a cursor tracked radial gradient, which looks like every other site
+shipped recently and said nothing about what this product does. The reticle
+motif is reused from the pressure plate and the guided tour, so hover reads as
+the system acquiring a zone.
+
+The perimeter is four scaled divs rather than an SVG `rect` with `pathLength`.
+`pathLength` on `rect` is not reliably supported, transforms are, and they
+composite on the GPU.

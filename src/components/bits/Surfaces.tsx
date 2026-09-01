@@ -1,4 +1,5 @@
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react'
+import type { Variants } from 'motion/react'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -137,55 +138,104 @@ export function Particles({
 }
 
 /* ============================================================
-   SpotlightCard
-   A cursor tracked highlight on the border and surface. This is
-   the default card treatment across the marketing sections.
+   ReticleCard
+   Hover reads as a targeting system acquiring a zone, which is
+   what the product actually does. Four hairlines trace the
+   perimeter clockwise, corner ticks snap inward, and a single
+   scan line sweeps the card once.
+
+   This replaced a cursor tracked radial gradient. That effect is
+   on roughly every site shipped in the last two years and it said
+   nothing about NEXUS.
+
+   The perimeter is four scaled divs rather than an SVG rect with
+   pathLength, which is not reliably supported on rect across
+   browsers. Transforms are, and they composite on the GPU.
    ============================================================ */
 
-export function SpotlightCard({
+/** Tuple, not number[], or motion reads it as a keyframe list. */
+const EASE = [0.22, 1, 0.28, 1] as const
+
+const TRACE: Variants = {
+  rest: { scaleX: 0, scaleY: 0 },
+  hover: (i: number) => ({
+    scaleX: 1,
+    scaleY: 1,
+    transition: { duration: 0.28, delay: i * 0.09, ease: EASE },
+  }),
+}
+
+const TICK: Variants = {
+  rest: { opacity: 0, scale: 0.5 },
+  hover: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.3, delay: 0.18 + i * 0.05, ease: EASE },
+  }),
+}
+
+export function ReticleCard({
   children,
   className,
-  spotlightColor = 'rgba(232, 93, 16, 0.09)',
   ...rest
 }: {
   children: ReactNode
   className?: string
-  spotlightColor?: string
   /** Lets the guided tour anchor a spotlight to this card. */
   'data-tour'?: string
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const mx = useMotionValue(-500)
-  const my = useMotionValue(-500)
-
   return (
-    <div
-      ref={ref}
+    <motion.div
       {...rest}
-      onMouseMove={(e) => {
-        const rect = ref.current?.getBoundingClientRect()
-        if (!rect) return
-        mx.set(e.clientX - rect.left)
-        my.set(e.clientY - rect.top)
-      }}
-      onMouseLeave={() => {
-        mx.set(-500)
-        my.set(-500)
-      }}
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      whileFocus="hover"
+      variants={{ rest: { y: 0 }, hover: { y: -3 } }}
+      transition={{ duration: 0.35, ease: EASE }}
       className={cn('panel group relative overflow-hidden', className)}
     >
-      <motion.div
-        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+      {/* perimeter, drawn clockwise from the top left */}
+      <motion.span custom={0} variants={TRACE} className="pointer-events-none absolute left-0 top-0 h-px w-full origin-left bg-ember-500" />
+      <motion.span custom={1} variants={TRACE} className="pointer-events-none absolute right-0 top-0 h-full w-px origin-top bg-ember-500" />
+      <motion.span custom={2} variants={TRACE} className="pointer-events-none absolute bottom-0 right-0 h-px w-full origin-right bg-ember-500" />
+      <motion.span custom={3} variants={TRACE} className="pointer-events-none absolute bottom-0 left-0 h-full w-px origin-bottom bg-ember-500" />
+
+      {/* corner ticks, the same reticle the console and the tour use */}
+      {[
+        { i: 0, cls: 'left-1.5 top-1.5 border-l border-t' },
+        { i: 1, cls: 'right-1.5 top-1.5 border-r border-t' },
+        { i: 2, cls: 'right-1.5 bottom-1.5 border-b border-r' },
+        { i: 3, cls: 'bottom-1.5 left-1.5 border-b border-l' },
+      ].map((c) => (
+        <motion.span
+          key={c.i}
+          custom={c.i}
+          variants={TICK}
+          className={cn('pointer-events-none absolute h-2.5 w-2.5 border-ember-500', c.cls)}
+        />
+      ))}
+
+      {/* one pass of the scan line */}
+      <motion.span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-16"
         style={{
-          background: useTransform(
-            [mx, my],
-            ([x, y]) =>
-              'radial-gradient(340px circle at ' + x + 'px ' + y + 'px, ' + spotlightColor + ', transparent 72%)',
-          ),
+          background:
+            'linear-gradient(180deg, transparent, color-mix(in oklab, var(--color-ember-500) 12%, transparent), transparent)',
+        }}
+        variants={{
+          rest: { opacity: 0, y: '-100%' },
+          hover: {
+            opacity: [0, 1, 1, 0],
+            y: ['-100%', '0%', '620%', '760%'],
+            transition: { duration: 1.05, times: [0, 0.12, 0.86, 1], ease: 'linear' },
+          },
         }}
       />
+
       <div className="relative">{children}</div>
-    </div>
+    </motion.div>
   )
 }
 
